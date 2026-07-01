@@ -1,0 +1,1008 @@
+<!doctype html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            name="description"
+            content="Detalhes internos de um exame enviado na plataforma MeuLaudo."
+        />
+        <title>MeuLaudo — Detalhes do Exame</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+            rel="stylesheet"
+        />
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+        <style type="text/tailwindcss">
+            @theme {
+                --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+            }
+            @layer base {
+                * {
+                    @apply box-border;
+                }
+                body {
+                    @apply min-h-screen bg-slate-50 font-sans text-slate-700 antialiased;
+                }
+                button,
+                a,
+                input,
+                select,
+                textarea {
+                    @apply outline-none;
+                }
+            }
+            @media (prefers-reduced-motion: reduce) {
+                *,
+                *::before,
+                *::after {
+                    animation-duration: 0.01ms !important;
+                    transition-duration: 0.01ms !important;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <header class="sticky top-0 z-30 border-b border-slate-200 bg-white">
+            <div
+                class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8"
+            >
+                <a
+                    href="listagem.html"
+                    class="inline-flex items-center gap-3 rounded-xl focus-visible:ring-2 focus-visible:ring-sky-900 focus-visible:ring-offset-2"
+                >
+                    <span
+                        class="relative grid size-11 place-items-center overflow-hidden rounded-2xl bg-sky-900 text-white shadow-sm"
+                    >
+                        <svg viewBox="0 0 24 24" class="size-6" fill="none" aria-hidden="true">
+                            <path
+                                d="M7 3.75h7.25L18 7.5v12.75H7V3.75Z"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linejoin="round"
+                            />
+                            <path
+                                d="M14 3.75V7.5h4"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linejoin="round"
+                            />
+                            <path
+                                d="M9.25 13h1.5l1-2.25 1.5 4 1-2h1.5"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                        </svg>
+                        <span class="absolute inset-x-0 bottom-0 h-1 bg-sky-400"></span>
+                    </span>
+                    <span
+                        ><span class="block text-lg font-extrabold tracking-tight text-sky-900"
+                            >MeuLaudo</span
+                        ><span class="hidden text-xs font-medium text-slate-500 sm:block"
+                            >Portal da Clínica</span
+                        ></span
+                    >
+                </a>
+
+                <nav class="hidden items-center gap-2 md:flex" aria-label="Navegação do portal">
+                    <a
+                        href="listagem.html"
+                        class="rounded-xl bg-sky-50 px-4 py-2.5 text-sm font-bold text-sky-900"
+                        >Exames enviados</a
+                    >
+                    <a
+                        href="upload.html"
+                        class="rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-100 hover:text-sky-900"
+                        >Novo exame</a
+                    >
+                    <a
+                        href="usuarios.html"
+                        class="rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-100 hover:text-sky-900"
+                        >Usuários</a
+                    >
+                </nav>
+
+                <div class="flex items-center gap-3">
+                    <div class="hidden text-right sm:block">
+                        <p class="text-sm font-bold text-slate-800">Clínica Central</p>
+                        <p class="text-xs text-slate-500">Operador: Mariana</p>
+                    </div>
+                    <span
+                        class="grid size-10 place-items-center rounded-full bg-sky-100 text-sm font-extrabold text-sky-900"
+                        >MC</span
+                    >
+                    <a
+                        href="auth.html"
+                        onclick="
+                            sessionStorage.removeItem('meulaudoClinicSession');
+                            localStorage.removeItem('meulaudoClinicSession');
+                        "
+                        title="Sair"
+                        aria-label="Sair do portal"
+                        class="hidden size-10 place-items-center rounded-xl text-slate-500 transition hover:bg-slate-100 hover:text-rose-600 sm:grid"
+                        ><svg viewBox="0 0 24 24" class="size-5" fill="none" aria-hidden="true">
+                            <path
+                                d="M10 5H5v14h5m4-3 4-4-4-4m4 4H9"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            /></svg
+                    ></a>
+                </div>
+            </div>
+            <nav class="border-t border-slate-200 px-4 py-2 md:hidden" aria-label="Navegação móvel">
+                <div class="mx-auto flex max-w-7xl gap-1 overflow-x-auto">
+                    <a
+                        href="listagem.html"
+                        class="shrink-0 rounded-xl bg-sky-50 px-3 py-2.5 text-sm font-bold text-sky-900"
+                        >Exames</a
+                    ><a
+                        href="upload.html"
+                        class="shrink-0 rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-600"
+                        >Novo exame</a
+                    ><a
+                        href="usuarios.html"
+                        class="shrink-0 rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-600"
+                        >Usuários</a
+                    ><a
+                        href="auth.html"
+                        onclick="
+                            sessionStorage.removeItem('meulaudoClinicSession');
+                            localStorage.removeItem('meulaudoClinicSession');
+                        "
+                        class="ml-auto shrink-0 rounded-xl px-3 py-2.5 text-sm font-bold text-rose-600"
+                        >Sair</a
+                    >
+                </div>
+            </nav>
+        </header>
+
+        <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
+            <div class="mb-8 flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
+                <div>
+                    <a
+                        href="listagem.html"
+                        class="inline-flex items-center gap-2 rounded-xl text-sm font-bold text-sky-700 transition hover:text-sky-900 focus-visible:ring-2 focus-visible:ring-sky-900 focus-visible:ring-offset-2"
+                    >
+                        <svg viewBox="0 0 24 24" class="size-4" fill="none" aria-hidden="true">
+                            <path
+                                d="m15 6-6 6 6 6"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                        </svg>
+                        Voltar para exames enviados
+                    </a>
+                    <p class="mt-6 text-sm font-bold uppercase tracking-[0.14em] text-sky-700">
+                        Detalhes do registro
+                    </p>
+                    <div class="mt-3 flex flex-wrap items-center gap-3">
+                        <h1
+                            id="page-title"
+                            class="text-3xl font-extrabold tracking-tight text-sky-900"
+                        >
+                            Hemograma completo
+                        </h1>
+                        <span
+                            id="status-badge"
+                            class="inline-flex items-center rounded-full px-3 py-1 text-xs font-extrabold uppercase tracking-[0.08em]"
+                        ></span>
+                    </div>
+                    <p class="mt-3 max-w-2xl text-sm leading-6 text-slate-500">
+                        Confira os dados do exame, arquivo anexado e situação do envio via WhatsApp.
+                    </p>
+                </div>
+                <div class="flex flex-col gap-3 sm:flex-row">
+                    <button
+                        id="copy-link"
+                        type="button"
+                        class="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-bold text-slate-700 shadow-sm transition hover:border-sky-700 hover:text-sky-900 focus-visible:ring-2 focus-visible:ring-sky-900 focus-visible:ring-offset-2"
+                    >
+                        <svg viewBox="0 0 24 24" class="size-4" fill="none" aria-hidden="true">
+                            <path d="M9 9h9v9H9V9Z" stroke="currentColor" stroke-width="1.7" />
+                            <path
+                                d="M6 15H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v1"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linecap="round"
+                            />
+                        </svg>
+                        Copiar link do paciente
+                    </button>
+                    <button
+                        id="open-preview"
+                        type="button"
+                        class="inline-flex items-center justify-center gap-2 rounded-xl bg-sky-900 px-5 py-3 text-sm font-bold text-white shadow-sm transition hover:bg-sky-800 focus-visible:ring-2 focus-visible:ring-sky-900 focus-visible:ring-offset-2"
+                    >
+                        <svg viewBox="0 0 24 24" class="size-4" fill="none" aria-hidden="true">
+                            <path
+                                d="M3 12s3.25-6 9-6 9 6 9 6-3.25 6-9 6-9-6-9-6Z"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                            />
+                            <circle
+                                cx="12"
+                                cy="12"
+                                r="2.5"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                            />
+                        </svg>
+                        Visualizar arquivo
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
+                <section class="space-y-6">
+                    <article
+                        class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8"
+                    >
+                        <div
+                            class="flex flex-col justify-between gap-4 border-b border-slate-200 pb-6 sm:flex-row sm:items-start"
+                        >
+                            <div>
+                                <h2 class="text-xl font-bold text-slate-900">
+                                    Informações do exame
+                                </h2>
+                                <p class="mt-2 text-sm text-slate-500">
+                                    Registro independente gerado pelo envio da clínica.
+                                </p>
+                            </div>
+                            <button
+                                id="edit-exam"
+                                type="button"
+                                class="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-bold text-slate-700 transition hover:border-sky-700 hover:text-sky-900"
+                            >
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    class="size-4"
+                                    fill="none"
+                                    aria-hidden="true"
+                                >
+                                    <path
+                                        d="m14.5 5.5 4 4L9 19H5v-4L14.5 5.5Z"
+                                        stroke="currentColor"
+                                        stroke-width="1.7"
+                                        stroke-linejoin="round"
+                                    />
+                                </svg>
+                                Editar
+                            </button>
+                        </div>
+                        <dl class="mt-6 grid gap-5 sm:grid-cols-2">
+                            <div class="rounded-2xl bg-slate-50 p-4">
+                                <dt
+                                    class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500"
+                                >
+                                    Nome do exame
+                                </dt>
+                                <dd
+                                    id="exam-name"
+                                    class="mt-2 text-sm font-bold text-slate-900"
+                                ></dd>
+                            </div>
+                            <div class="rounded-2xl bg-slate-50 p-4">
+                                <dt
+                                    class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500"
+                                >
+                                    Protocolo
+                                </dt>
+                                <dd
+                                    id="protocol"
+                                    class="mt-2 text-sm font-bold text-slate-900"
+                                ></dd>
+                            </div>
+                            <div class="rounded-2xl bg-slate-50 p-4">
+                                <dt
+                                    class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500"
+                                >
+                                    Data do exame
+                                </dt>
+                                <dd
+                                    id="exam-date"
+                                    class="mt-2 text-sm font-bold text-slate-900"
+                                ></dd>
+                            </div>
+                            <div class="rounded-2xl bg-slate-50 p-4">
+                                <dt
+                                    class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500"
+                                >
+                                    Enviado em
+                                </dt>
+                                <dd
+                                    id="created-at"
+                                    class="mt-2 text-sm font-bold text-slate-900"
+                                ></dd>
+                            </div>
+                        </dl>
+                    </article>
+
+                    <article
+                        class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8"
+                    >
+                        <h2 class="text-xl font-bold text-slate-900">Paciente vinculado</h2>
+                        <p class="mt-2 text-sm text-slate-500">
+                            Esses dados não criam cadastro permanente. Servem apenas para localizar
+                            este exame.
+                        </p>
+                        <dl class="mt-6 grid gap-5 sm:grid-cols-3">
+                            <div class="rounded-2xl border border-slate-200 p-4">
+                                <dt
+                                    class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500"
+                                >
+                                    Paciente
+                                </dt>
+                                <dd
+                                    id="patient-name"
+                                    class="mt-2 text-sm font-bold text-slate-900"
+                                ></dd>
+                            </div>
+                            <div class="rounded-2xl border border-slate-200 p-4">
+                                <dt
+                                    class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500"
+                                >
+                                    CPF
+                                </dt>
+                                <dd
+                                    id="patient-cpf"
+                                    class="mt-2 text-sm font-bold text-slate-900"
+                                ></dd>
+                            </div>
+                            <div class="rounded-2xl border border-slate-200 p-4">
+                                <dt
+                                    class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500"
+                                >
+                                    WhatsApp
+                                </dt>
+                                <dd
+                                    id="patient-phone"
+                                    class="mt-2 text-sm font-bold text-slate-900"
+                                ></dd>
+                            </div>
+                        </dl>
+                    </article>
+
+                    <article
+                        class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8"
+                    >
+                        <div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-start">
+                            <div>
+                                <h2 class="text-xl font-bold text-slate-900">Arquivo anexado</h2>
+                                <p class="mt-2 text-sm text-slate-500">
+                                    Arquivo que será disponibilizado para consulta por CPF e
+                                    protocolo.
+                                </p>
+                            </div>
+                            <button
+                                id="replace-file"
+                                type="button"
+                                class="rounded-xl border border-slate-300 px-4 py-2.5 text-sm font-bold text-slate-700 transition hover:border-sky-700 hover:text-sky-900"
+                            >
+                                Substituir arquivo
+                            </button>
+                        </div>
+                        <div class="mt-6 rounded-3xl border border-slate-200 bg-slate-50 p-5">
+                            <div
+                                class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+                            >
+                                <div class="flex items-center gap-4">
+                                    <span
+                                        class="grid size-14 place-items-center rounded-2xl bg-white text-rose-600 shadow-sm"
+                                        ><svg
+                                            viewBox="0 0 24 24"
+                                            class="size-7"
+                                            fill="none"
+                                            aria-hidden="true"
+                                        >
+                                            <path
+                                                d="M7 3.75h7.25L18 7.5v12.75H7V3.75Z"
+                                                stroke="currentColor"
+                                                stroke-width="1.7"
+                                                stroke-linejoin="round"
+                                            />
+                                            <path
+                                                d="M14 3.75V7.5h4"
+                                                stroke="currentColor"
+                                                stroke-width="1.7"
+                                                stroke-linejoin="round"
+                                            /></svg
+                                    ></span>
+                                    <div>
+                                        <p
+                                            id="file-name"
+                                            class="text-sm font-extrabold text-slate-900"
+                                        ></p>
+                                        <p
+                                            id="file-meta"
+                                            class="mt-1 text-xs font-medium text-slate-500"
+                                        ></p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button
+                                        id="download-file"
+                                        type="button"
+                                        class="rounded-xl bg-white px-4 py-2.5 text-sm font-bold text-slate-700 shadow-sm transition hover:text-sky-900"
+                                    >
+                                        Baixar
+                                    </button>
+                                    <button
+                                        id="delete-file"
+                                        type="button"
+                                        class="rounded-xl bg-white px-4 py-2.5 text-sm font-bold text-rose-600 shadow-sm transition hover:bg-rose-50"
+                                    >
+                                        Excluir
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </section>
+
+                <aside class="space-y-6">
+                    <section id="whatsapp-card" class="rounded-3xl border bg-white p-6 shadow-sm">
+                        <div class="flex items-start gap-4">
+                            <span
+                                id="whatsapp-icon"
+                                class="grid size-12 shrink-0 place-items-center rounded-2xl"
+                            ></span>
+                            <div>
+                                <h2
+                                    id="whatsapp-title"
+                                    class="text-lg font-extrabold text-slate-900"
+                                ></h2>
+                                <p
+                                    id="whatsapp-description"
+                                    class="mt-2 text-sm leading-6 text-slate-500"
+                                ></p>
+                            </div>
+                        </div>
+                        <button
+                            id="resend-whatsapp"
+                            type="button"
+                            class="mt-5 hidden w-full rounded-xl bg-sky-900 px-4 py-3 text-sm font-bold text-white transition hover:bg-sky-800 focus-visible:ring-2 focus-visible:ring-sky-900 focus-visible:ring-offset-2"
+                        >
+                            Reenviar WhatsApp
+                        </button>
+                    </section>
+
+                    <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+                        <h2 class="text-lg font-extrabold text-slate-900">Ações rápidas</h2>
+                        <div class="mt-5 space-y-3">
+                            <button
+                                id="mark-available"
+                                type="button"
+                                class="flex w-full items-center justify-between rounded-2xl border border-slate-200 px-4 py-3 text-left text-sm font-bold text-slate-700 transition hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700"
+                            >
+                                <span>Marcar como disponível</span><span>→</span>
+                            </button>
+                            <button
+                                id="mark-processing"
+                                type="button"
+                                class="flex w-full items-center justify-between rounded-2xl border border-slate-200 px-4 py-3 text-left text-sm font-bold text-slate-700 transition hover:border-amber-300 hover:bg-amber-50 hover:text-amber-700"
+                            >
+                                <span>Marcar como processando</span><span>→</span>
+                            </button>
+                            <button
+                                id="mark-error"
+                                type="button"
+                                class="flex w-full items-center justify-between rounded-2xl border border-slate-200 px-4 py-3 text-left text-sm font-bold text-slate-700 transition hover:border-rose-300 hover:bg-rose-50 hover:text-rose-700"
+                            >
+                                <span>Marcar erro no arquivo</span><span>→</span>
+                            </button>
+                        </div>
+                    </section>
+
+                    <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+                        <h2 class="text-lg font-extrabold text-slate-900">Auditoria visual</h2>
+                        <ol id="timeline" class="mt-5 space-y-4 text-sm"></ol>
+                    </section>
+                </aside>
+            </div>
+        </main>
+
+        <div
+            id="preview-modal"
+            class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 p-4"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="preview-title"
+        >
+            <div class="w-full max-w-3xl overflow-hidden rounded-3xl bg-white shadow-2xl">
+                <div
+                    class="flex items-start justify-between gap-4 border-b border-slate-200 p-5 sm:p-6"
+                >
+                    <div>
+                        <p class="text-xs font-bold uppercase tracking-[0.14em] text-sky-700">
+                            Pré-visualização
+                        </p>
+                        <h2 id="preview-title" class="mt-2 text-xl font-bold text-slate-900">
+                            Arquivo do exame
+                        </h2>
+                    </div>
+                    <button
+                        data-close-modal="preview-modal"
+                        type="button"
+                        aria-label="Fechar"
+                        class="grid size-10 place-items-center rounded-xl text-slate-500 hover:bg-slate-100"
+                    >
+                        <svg viewBox="0 0 24 24" class="size-5" fill="none" aria-hidden="true">
+                            <path
+                                d="m6 6 12 12M18 6 6 18"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                            />
+                        </svg>
+                    </button>
+                </div>
+                <div class="bg-slate-100 p-6 sm:p-8">
+                    <div
+                        class="mx-auto min-h-[420px] max-w-xl rounded-2xl border border-slate-300 bg-white p-8 shadow-sm"
+                    >
+                        <div class="h-4 w-2/3 rounded-full bg-slate-200"></div>
+                        <div class="mt-8 space-y-3">
+                            <div class="h-3 rounded-full bg-slate-100"></div>
+                            <div class="h-3 rounded-full bg-slate-100"></div>
+                            <div class="h-3 w-4/5 rounded-full bg-slate-100"></div>
+                        </div>
+                        <div
+                            class="my-10 rounded-2xl border border-sky-100 bg-sky-50 p-6 text-center"
+                        >
+                            <p class="text-sm font-extrabold text-sky-900">
+                                Prévia ilustrativa do laudo
+                            </p>
+                            <p
+                                id="preview-file-name"
+                                class="mt-2 text-xs font-medium text-slate-500"
+                            ></p>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="h-3 rounded-full bg-slate-100"></div>
+                            <div class="h-3 w-5/6 rounded-full bg-slate-100"></div>
+                            <div class="h-3 w-3/4 rounded-full bg-slate-100"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div
+            id="edit-modal"
+            class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 p-4"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="edit-title"
+        >
+            <div class="w-full max-w-xl rounded-3xl bg-white p-6 shadow-2xl sm:p-8">
+                <div class="flex items-start justify-between gap-4">
+                    <div>
+                        <p class="text-xs font-bold uppercase tracking-[0.14em] text-sky-700">
+                            Editar exame
+                        </p>
+                        <h2 id="edit-title" class="mt-2 text-xl font-bold text-slate-900">
+                            Atualizar dados
+                        </h2>
+                    </div>
+                    <button
+                        data-close-modal="edit-modal"
+                        type="button"
+                        aria-label="Fechar"
+                        class="grid size-10 place-items-center rounded-xl text-slate-500 hover:bg-slate-100"
+                    >
+                        <svg viewBox="0 0 24 24" class="size-5" fill="none" aria-hidden="true">
+                            <path
+                                d="m6 6 12 12M18 6 6 18"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                            />
+                        </svg>
+                    </button>
+                </div>
+                <form id="edit-form" class="mt-6 grid gap-5 sm:grid-cols-2" novalidate>
+                    <div class="sm:col-span-2">
+                        <label
+                            for="edit-patient-name"
+                            class="mb-2 block text-sm font-bold text-slate-700"
+                            >Paciente</label
+                        ><input
+                            id="edit-patient-name"
+                            class="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:border-sky-900 focus:ring-2 focus:ring-sky-900/20"
+                        />
+                    </div>
+                    <div>
+                        <label for="edit-cpf" class="mb-2 block text-sm font-bold text-slate-700"
+                            >CPF</label
+                        ><input
+                            id="edit-cpf"
+                            maxlength="14"
+                            class="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:border-sky-900 focus:ring-2 focus:ring-sky-900/20"
+                        />
+                    </div>
+                    <div>
+                        <label for="edit-phone" class="mb-2 block text-sm font-bold text-slate-700"
+                            >WhatsApp</label
+                        ><input
+                            id="edit-phone"
+                            maxlength="15"
+                            class="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:border-sky-900 focus:ring-2 focus:ring-sky-900/20"
+                        />
+                    </div>
+                    <div>
+                        <label
+                            for="edit-protocol"
+                            class="mb-2 block text-sm font-bold text-slate-700"
+                            >Protocolo</label
+                        ><input
+                            id="edit-protocol"
+                            class="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm uppercase focus:border-sky-900 focus:ring-2 focus:ring-sky-900/20"
+                        />
+                    </div>
+                    <div>
+                        <label for="edit-status" class="mb-2 block text-sm font-bold text-slate-700"
+                            >Status</label
+                        ><select
+                            id="edit-status"
+                            class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm focus:border-sky-900 focus:ring-2 focus:ring-sky-900/20"
+                        >
+                            <option value="disponivel">Disponível</option>
+                            <option value="processando">Processando</option>
+                            <option value="erro">Erro no arquivo</option>
+                        </select>
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label
+                            for="edit-exam-name"
+                            class="mb-2 block text-sm font-bold text-slate-700"
+                            >Nome do exame</label
+                        ><input
+                            id="edit-exam-name"
+                            class="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:border-sky-900 focus:ring-2 focus:ring-sky-900/20"
+                        />
+                    </div>
+                    <div class="sm:col-span-2 flex justify-end gap-3 pt-2">
+                        <button
+                            data-close-modal="edit-modal"
+                            type="button"
+                            class="rounded-xl border border-slate-300 px-4 py-3 text-sm font-bold text-slate-700"
+                        >
+                            Cancelar</button
+                        ><button
+                            type="submit"
+                            class="rounded-xl bg-sky-900 px-5 py-3 text-sm font-bold text-white hover:bg-sky-800"
+                        >
+                            Salvar alterações
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div
+            id="toast"
+            role="status"
+            aria-live="polite"
+            class="fixed bottom-5 right-5 z-50 hidden max-w-sm rounded-2xl border border-emerald-200 bg-white p-4 shadow-xl"
+        >
+            <p id="toast-text" class="text-sm font-bold text-slate-900"></p>
+        </div>
+
+        <script>
+            const defaultExam = {
+                id: '1',
+                patientName: 'Ana Paula Ribeiro',
+                patientCpf: '12345678900',
+                patientPhone: '21988887777',
+                protocol: 'ML-2026-0019',
+                examName: 'Hemograma completo',
+                examDate: '2026-06-28',
+                status: 'disponivel',
+                filePath: '/exames/ML-2026-0019.pdf',
+                originalFileName: 'hemograma-ana-paula.pdf',
+                fileMimeType: 'application/pdf',
+                fileSize: 1240000,
+                whatsappFailed: true,
+                createdAt: '2026-06-30T09:18:00',
+            };
+
+            const storageKey = 'meulaudoUploads';
+            let exam = loadExam();
+
+            const statusMap = {
+                disponivel: {
+                    label: 'Disponível',
+                    badge: 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200',
+                    timeline: 'Arquivo pronto para consulta.',
+                },
+                processando: {
+                    label: 'Processando',
+                    badge: 'bg-amber-50 text-amber-700 ring-1 ring-amber-200',
+                    timeline: 'Arquivo em processamento.',
+                },
+                erro: {
+                    label: 'Erro no arquivo',
+                    badge: 'bg-rose-50 text-rose-700 ring-1 ring-rose-200',
+                    timeline: 'O arquivo precisa ser revisado.',
+                },
+            };
+
+            function onlyNumbers(value) {
+                return String(value || '').replace(/\D/g, '');
+            }
+            function formatCpf(value) {
+                const digits = onlyNumbers(value).slice(0, 11);
+                return digits
+                    .replace(/(\d{3})(\d)/, '$1.$2')
+                    .replace(/(\d{3})(\d)/, '$1.$2')
+                    .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+            }
+            function formatPhone(value) {
+                const digits = onlyNumbers(value).slice(0, 11);
+                return digits
+                    .replace(/(\d{2})(\d)/, '($1) $2')
+                    .replace(/(\d{5})(\d{1,4})$/, '$1-$2');
+            }
+            function formatBytes(bytes) {
+                if (!bytes) return '0 KB';
+                const units = ['bytes', 'KB', 'MB', 'GB'];
+                let size = bytes;
+                let index = 0;
+                while (size >= 1024 && index < units.length - 1) {
+                    size = size / 1024;
+                    index++;
+                }
+                return `${size.toFixed(index === 0 ? 0 : 1)} ${units[index]}`;
+            }
+            function formatDate(value) {
+                if (!value) return 'Não informado';
+                return new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short' }).format(
+                    new Date(value)
+                );
+            }
+            function formatDateTime(value) {
+                if (!value) return 'Não informado';
+                return new Intl.DateTimeFormat('pt-BR', {
+                    dateStyle: 'short',
+                    timeStyle: 'short',
+                }).format(new Date(value));
+            }
+
+            function loadExam() {
+                const params = new URLSearchParams(window.location.search);
+                const id = params.get('id');
+                const uploads = JSON.parse(localStorage.getItem(storageKey) || '[]');
+                if (uploads.length && id)
+                    return uploads.find((item) => String(item.id) === String(id)) || uploads[0];
+                if (uploads.length) return uploads[0];
+                return defaultExam;
+            }
+
+            function persistExam() {
+                const uploads = JSON.parse(localStorage.getItem(storageKey) || '[]');
+                const index = uploads.findIndex((item) => String(item.id) === String(exam.id));
+                if (index >= 0) uploads[index] = exam;
+                else uploads.unshift(exam);
+                localStorage.setItem(storageKey, JSON.stringify(uploads));
+            }
+
+            function render() {
+                const status = statusMap[exam.status] || statusMap.processando;
+                document.getElementById('page-title').textContent = exam.examName;
+                document.getElementById('status-badge').textContent = status.label;
+                document.getElementById('status-badge').className =
+                    `inline-flex items-center rounded-full px-3 py-1 text-xs font-extrabold uppercase tracking-[0.08em] ${status.badge}`;
+                document.getElementById('exam-name').textContent = exam.examName;
+                document.getElementById('protocol').textContent = exam.protocol;
+                document.getElementById('exam-date').textContent = formatDate(exam.examDate);
+                document.getElementById('created-at').textContent = formatDateTime(exam.createdAt);
+                document.getElementById('patient-name').textContent = exam.patientName;
+                document.getElementById('patient-cpf').textContent = formatCpf(exam.patientCpf);
+                document.getElementById('patient-phone').textContent = formatPhone(
+                    exam.patientPhone
+                );
+                document.getElementById('file-name').textContent = exam.originalFileName;
+                document.getElementById('file-meta').textContent =
+                    `${exam.fileMimeType || 'Arquivo'} • ${formatBytes(exam.fileSize)}`;
+                document.getElementById('preview-file-name').textContent = exam.originalFileName;
+                renderWhatsapp();
+                renderTimeline();
+            }
+
+            function renderWhatsapp() {
+                const card = document.getElementById('whatsapp-card');
+                const icon = document.getElementById('whatsapp-icon');
+                const title = document.getElementById('whatsapp-title');
+                const description = document.getElementById('whatsapp-description');
+                const button = document.getElementById('resend-whatsapp');
+
+                if (exam.whatsappFailed) {
+                    card.className = 'rounded-3xl border border-rose-200 bg-rose-50 p-6 shadow-sm';
+                    icon.className =
+                        'grid size-12 shrink-0 place-items-center rounded-2xl bg-white text-rose-600';
+                    icon.innerHTML =
+                        '<svg viewBox="0 0 24 24" class="size-6" fill="none" aria-hidden="true"><path d="M12 8v5m0 3h.01M10.3 4.7 3.4 16.6A2 2 0 0 0 5.1 19h13.8a2 2 0 0 0 1.7-2.4L13.7 4.7a2 2 0 0 0-3.4 0Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+                    title.textContent = 'WhatsApp não enviado';
+                    description.textContent =
+                        'Renderize o botão de reenvio quando a flag whatsappFailed estiver verdadeira.';
+                    button.classList.remove('hidden');
+                } else {
+                    card.className =
+                        'rounded-3xl border border-emerald-200 bg-emerald-50 p-6 shadow-sm';
+                    icon.className =
+                        'grid size-12 shrink-0 place-items-center rounded-2xl bg-white text-emerald-600';
+                    icon.innerHTML =
+                        '<svg viewBox="0 0 24 24" class="size-6" fill="none" aria-hidden="true"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+                    title.textContent = 'WhatsApp enviado';
+                    description.textContent =
+                        'O paciente já recebeu o link para consultar o exame com CPF e protocolo.';
+                    button.classList.add('hidden');
+                }
+            }
+
+            function renderTimeline() {
+                const timeline = document.getElementById('timeline');
+                const items = [
+                    {
+                        label: 'Registro criado',
+                        value: formatDateTime(exam.createdAt),
+                        color: 'bg-sky-900',
+                    },
+                    {
+                        label: statusMap[exam.status]?.timeline || 'Status atualizado.',
+                        value: statusMap[exam.status]?.label || 'Processando',
+                        color:
+                            exam.status === 'erro'
+                                ? 'bg-rose-600'
+                                : exam.status === 'processando'
+                                  ? 'bg-amber-500'
+                                  : 'bg-emerald-600',
+                    },
+                    {
+                        label: exam.whatsappFailed ? 'Falha no WhatsApp' : 'WhatsApp enviado',
+                        value: exam.whatsappFailed ? 'Reenvio pendente' : 'Sem pendências',
+                        color: exam.whatsappFailed ? 'bg-rose-600' : 'bg-emerald-600',
+                    },
+                ];
+                timeline.innerHTML = items
+                    .map(
+                        (item) => `
+        <li class="flex gap-3">
+          <span class="mt-1 size-2.5 rounded-full ${item.color}"></span>
+          <div><p class="font-bold text-slate-800">${item.label}</p><p class="mt-1 text-xs font-medium text-slate-500">${item.value}</p></div>
+        </li>
+      `
+                    )
+                    .join('');
+            }
+
+            function showToast(message) {
+                const toast = document.getElementById('toast');
+                document.getElementById('toast-text').textContent = message;
+                toast.classList.remove('hidden');
+                window.clearTimeout(showToast.timer);
+                showToast.timer = window.setTimeout(() => toast.classList.add('hidden'), 2600);
+            }
+
+            function openModal(id) {
+                document.getElementById(id).classList.remove('hidden');
+                document.getElementById(id).classList.add('flex');
+            }
+            function closeModal(id) {
+                document.getElementById(id).classList.add('hidden');
+                document.getElementById(id).classList.remove('flex');
+            }
+
+            document.querySelectorAll('[data-close-modal]').forEach((button) => {
+                button.addEventListener('click', () => closeModal(button.dataset.closeModal));
+            });
+
+            document
+                .getElementById('open-preview')
+                .addEventListener('click', () => openModal('preview-modal'));
+            document.getElementById('edit-exam').addEventListener('click', () => {
+                document.getElementById('edit-patient-name').value = exam.patientName;
+                document.getElementById('edit-cpf').value = formatCpf(exam.patientCpf);
+                document.getElementById('edit-phone').value = formatPhone(exam.patientPhone);
+                document.getElementById('edit-protocol').value = exam.protocol;
+                document.getElementById('edit-status').value = exam.status;
+                document.getElementById('edit-exam-name').value = exam.examName;
+                openModal('edit-modal');
+            });
+
+            document
+                .getElementById('edit-cpf')
+                .addEventListener(
+                    'input',
+                    (event) => (event.target.value = formatCpf(event.target.value))
+                );
+            document
+                .getElementById('edit-phone')
+                .addEventListener(
+                    'input',
+                    (event) => (event.target.value = formatPhone(event.target.value))
+                );
+
+            document.getElementById('edit-form').addEventListener('submit', (event) => {
+                event.preventDefault();
+                exam = {
+                    ...exam,
+                    patientName: document.getElementById('edit-patient-name').value.trim(),
+                    patientCpf: onlyNumbers(document.getElementById('edit-cpf').value),
+                    patientPhone: onlyNumbers(document.getElementById('edit-phone').value),
+                    protocol: document.getElementById('edit-protocol').value.trim().toUpperCase(),
+                    status: document.getElementById('edit-status').value,
+                    examName: document.getElementById('edit-exam-name').value.trim(),
+                };
+                persistExam();
+                render();
+                closeModal('edit-modal');
+                showToast('Dados do exame atualizados.');
+            });
+
+            document.getElementById('resend-whatsapp').addEventListener('click', () => {
+                exam.whatsappFailed = false;
+                persistExam();
+                render();
+                showToast('WhatsApp reenviado com sucesso.');
+            });
+
+            document.getElementById('copy-link').addEventListener('click', async () => {
+                const link = `${location.origin}${location.pathname.replace('detalhes-exame.html', 'login.html')}?protocolo=${encodeURIComponent(exam.protocol)}`;
+                try {
+                    await navigator.clipboard.writeText(link);
+                    showToast('Link do paciente copiado.');
+                } catch {
+                    showToast('Link simulado pronto para compartilhamento.');
+                }
+            });
+
+            document
+                .getElementById('download-file')
+                .addEventListener('click', () => showToast('Download simulado iniciado.'));
+            document
+                .getElementById('replace-file')
+                .addEventListener('click', () =>
+                    showToast('Abriria o seletor para substituir arquivo.')
+                );
+            document
+                .getElementById('delete-file')
+                .addEventListener('click', () => showToast('Confirmação de exclusão simulada.'));
+            document.getElementById('mark-available').addEventListener('click', () => {
+                exam.status = 'disponivel';
+                persistExam();
+                render();
+                showToast('Status alterado para disponível.');
+            });
+            document.getElementById('mark-processing').addEventListener('click', () => {
+                exam.status = 'processando';
+                persistExam();
+                render();
+                showToast('Status alterado para processando.');
+            });
+            document.getElementById('mark-error').addEventListener('click', () => {
+                exam.status = 'erro';
+                persistExam();
+                render();
+                showToast('Status alterado para erro no arquivo.');
+            });
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') {
+                    closeModal('preview-modal');
+                    closeModal('edit-modal');
+                }
+            });
+
+            render();
+        </script>
+    </body>
+</html>

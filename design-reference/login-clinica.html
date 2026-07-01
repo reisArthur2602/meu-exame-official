@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Acesso seguro ao Portal da Clínica MeuLaudo." />
+  <title>MeuLaudo — Login da Clínica</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style type="text/tailwindcss">
+    @theme { --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif; }
+    @layer base {
+      * { @apply box-border; }
+      body { @apply min-h-screen bg-slate-50 font-sans text-slate-700 antialiased; }
+      button, a, input { @apply outline-none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+  <main class="grid min-h-screen lg:grid-cols-[1.05fr_.95fr]">
+    <section class="relative hidden overflow-hidden bg-sky-900 p-12 text-white lg:flex lg:flex-col lg:justify-between" aria-labelledby="clinic-intro-title">
+      <div class="absolute -right-28 -top-28 size-80 rounded-full border border-white/10"></div>
+      <div class="absolute -right-10 -top-10 size-80 rounded-full border border-white/10"></div>
+      <div class="absolute -bottom-40 -left-40 size-[32rem] rounded-full bg-sky-700/30 blur-3xl"></div>
+
+      <a href="index.html" class="relative z-10 inline-flex w-fit items-center gap-3 rounded-xl focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-sky-900">
+        <span class="relative grid size-12 place-items-center overflow-hidden rounded-2xl bg-white text-sky-900 shadow-xl shadow-sky-950/20">
+          <svg viewBox="0 0 24 24" class="size-7" fill="none" aria-hidden="true"><path d="M7 3.75h7.25L18 7.5v12.75H7V3.75Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 3.75V7.5h4" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9.25 13h1.5l1-2.25 1.5 4 1-2h1.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="absolute inset-x-0 bottom-0 h-1 bg-sky-400"></span>
+        </span>
+        <span><span class="block text-xl font-extrabold tracking-tight">MeuLaudo</span><span class="block text-xs font-medium text-sky-200">Portal da Clínica</span></span>
+      </a>
+
+      <div class="relative z-10 max-w-xl">
+        <p class="text-sm font-bold uppercase tracking-[.18em] text-sky-200">Operação centralizada</p>
+        <h1 id="clinic-intro-title" class="mt-5 text-5xl font-extrabold leading-[1.08] tracking-[-.045em]">Entregue exames com mais segurança e menos trabalho manual.</h1>
+        <p class="mt-6 max-w-lg text-base leading-7 text-sky-100">Gerencie envios, acompanhe o processamento e controle quem pode acessar o painel da clínica.</p>
+
+        <div class="mt-10 rounded-3xl border border-white/15 bg-white/10 p-6 backdrop-blur-sm">
+          <svg viewBox="0 0 520 54" class="w-full text-sky-200" fill="none" aria-hidden="true">
+            <path d="M2 30h83l12-19 17 35 16-27 14 11h76l13-20 21 40 17-31 13 11h238" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div class="mt-6 grid grid-cols-3 gap-5 border-t border-white/15 pt-6">
+            <div><p class="text-2xl font-extrabold">1</p><p class="mt-1 text-xs font-semibold text-sky-200">Exame por acesso</p></div>
+            <div><p class="text-2xl font-extrabold">CPF</p><p class="mt-1 text-xs font-semibold text-sky-200">Identificação segura</p></div>
+            <div><p class="text-2xl font-extrabold">LGPD</p><p class="mt-1 text-xs font-semibold text-sky-200">Privacidade aplicada</p></div>
+          </div>
+        </div>
+      </div>
+
+      <p class="relative z-10 text-xs text-sky-200">© 2026 MeuLaudo. Ambiente demonstrativo.</p>
+    </section>
+
+    <section class="flex min-h-screen items-center px-4 py-8 sm:px-8 lg:px-14 xl:px-20" aria-labelledby="login-title">
+      <div class="mx-auto w-full max-w-md">
+        <div class="mb-10 flex items-center justify-between lg:hidden">
+          <a href="index.html" class="inline-flex items-center gap-3 rounded-xl focus-visible:ring-2 focus-visible:ring-sky-900 focus-visible:ring-offset-2">
+            <span class="relative grid size-11 place-items-center overflow-hidden rounded-2xl bg-sky-900 text-white shadow-sm"><svg viewBox="0 0 24 24" class="size-6" fill="none" aria-hidden="true"><path d="M7 3.75h7.25L18 7.5v12.75H7V3.75Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 3.75V7.5h4" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9.25 13h1.5l1-2.25 1.5 4 1-2h1.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="absolute inset-x-0 bottom-0 h-1 bg-sky-400"></span></span>
+            <span><span class="block text-lg font-extrabold text-sky-900">MeuLaudo</span><span class="block text-xs text-slate-500">Portal da Clínica</span></span>
+          </a>
+          <a href="index.html" class="rounded-xl px-3 py-2 text-sm font-bold text-slate-600 hover:bg-slate-100">Voltar</a>
+        </div>
+
+        <div>
+          <p class="text-sm font-bold uppercase tracking-[.16em] text-sky-700">Acesso restrito</p>
+          <h2 id="login-title" class="mt-3 text-3xl font-extrabold tracking-tight text-sky-900">Entrar no Portal da Clínica</h2>
+          <p class="mt-3 text-sm leading-6 text-slate-500">Use seu e-mail corporativo e sua senha para continuar.</p>
+        </div>
+
+        <div id="login-alert" role="alert" aria-live="assertive" class="mt-6 hidden rounded-2xl border border-rose-200 bg-rose-50 p-4">
+          <div class="flex items-start gap-3">
+            <span class="grid size-8 shrink-0 place-items-center rounded-xl bg-rose-100 text-rose-600"><svg viewBox="0 0 24 24" class="size-5" fill="none" aria-hidden="true"><path d="M12 8v5m0 3.2v.1M12 3.5 21 20H3L12 3.5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <div><p class="text-sm font-bold text-rose-800">Não foi possível entrar</p><p id="login-alert-message" class="mt-1 text-sm text-rose-700">Revise os dados informados.</p></div>
+          </div>
+        </div>
+
+        <div id="success-alert" role="status" aria-live="polite" class="mt-6 hidden rounded-2xl border border-emerald-200 bg-emerald-50 p-4">
+          <div class="flex items-center gap-3"><span class="grid size-8 place-items-center rounded-xl bg-emerald-100 text-emerald-600"><svg viewBox="0 0 24 24" class="size-5" fill="none" aria-hidden="true"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><p class="text-sm font-bold text-emerald-800">Acesso liberado. Abrindo o painel...</p></div>
+        </div>
+
+        <form id="clinic-login-form" class="mt-7 space-y-5" novalidate>
+          <div>
+            <label for="email" class="mb-2 block text-sm font-bold text-slate-700">E-mail</label>
+            <div class="relative">
+              <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400"><svg viewBox="0 0 24 24" class="size-5" fill="none" aria-hidden="true"><path d="M4 6.5h16v11H4v-11Zm1 1 7 5 7-5" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></span>
+              <input id="email" name="email" type="email" autocomplete="email" placeholder="nome@clinica.com.br" class="w-full rounded-xl border border-slate-300 bg-white py-3.5 pl-12 pr-4 text-sm font-medium text-slate-900 placeholder:text-slate-400 transition focus:border-sky-900 focus:ring-2 focus:ring-sky-900/20" />
+            </div>
+            <p id="email-error" class="mt-2 hidden text-xs font-semibold text-rose-600">Informe um e-mail válido.</p>
+          </div>
+
+          <div>
+            <div class="mb-2 flex items-center justify-between"><label for="password" class="text-sm font-bold text-slate-700">Senha</label><button id="forgot-password" type="button" class="text-xs font-bold text-sky-700 hover:text-sky-900">Esqueci minha senha</button></div>
+            <div class="relative">
+              <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400"><svg viewBox="0 0 24 24" class="size-5" fill="none" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span>
+              <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Digite sua senha" class="w-full rounded-xl border border-slate-300 bg-white py-3.5 pl-12 pr-12 text-sm font-medium text-slate-900 placeholder:text-slate-400 transition focus:border-sky-900 focus:ring-2 focus:ring-sky-900/20" />
+              <button id="toggle-password" type="button" aria-label="Mostrar senha" class="absolute inset-y-0 right-0 grid w-12 place-items-center rounded-r-xl text-slate-400 hover:text-sky-900 focus-visible:ring-2 focus-visible:ring-sky-900"><svg id="eye-icon" viewBox="0 0 24 24" class="size-5" fill="none" aria-hidden="true"><path d="M3 12s3.2-5 9-5 9 5 9 5-3.2 5-9 5-9-5-9-5Z" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="2.5" stroke="currentColor" stroke-width="1.7"/></svg></button>
+            </div>
+            <p id="password-error" class="mt-2 hidden text-xs font-semibold text-rose-600">Informe uma senha com pelo menos 6 caracteres.</p>
+          </div>
+
+          <label class="flex w-fit cursor-pointer items-center gap-3 text-sm text-slate-600"><input id="remember" type="checkbox" class="size-4 rounded border-slate-300 text-sky-900 focus:ring-sky-900" /><span>Manter acesso neste dispositivo</span></label>
+
+          <button id="submit-button" type="submit" class="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-sky-900 px-5 py-3.5 text-sm font-bold text-white shadow-sm transition hover:bg-sky-800 focus-visible:ring-2 focus-visible:ring-sky-900 focus-visible:ring-offset-2 disabled:cursor-wait disabled:opacity-70">
+            <span id="submit-label">Entrar no portal</span>
+            <svg id="submit-spinner" viewBox="0 0 24 24" class="hidden size-5 animate-spin" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="3" class="opacity-30"/><path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+          </button>
+        </form>
+
+        <div class="mt-7 rounded-2xl border border-sky-200 bg-sky-50 p-4">
+          <div class="flex items-start justify-between gap-4">
+            <div><p class="text-xs font-bold uppercase tracking-[.12em] text-sky-700">Conta de demonstração</p><p class="mt-2 text-sm font-semibold text-sky-950">admin@meulaudo.com.br</p><p class="mt-1 text-xs text-sky-700">Senha: 123456</p></div>
+            <button id="fill-demo" type="button" class="shrink-0 rounded-xl bg-white px-3 py-2 text-xs font-bold text-sky-900 shadow-sm hover:bg-sky-100">Preencher</button>
+          </div>
+        </div>
+
+        <p class="mt-8 text-center text-xs leading-5 text-slate-500">O acesso é exclusivo para profissionais autorizados pela clínica.</p>
+      </div>
+    </section>
+  </main>
+
+  <div id="recovery-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 p-4" role="dialog" aria-modal="true" aria-labelledby="recovery-title">
+    <div class="w-full max-w-md rounded-3xl bg-white p-6 shadow-2xl sm:p-8">
+      <div class="flex items-start justify-between gap-4">
+        <div><p class="text-xs font-bold uppercase tracking-[.14em] text-sky-700">Recuperar acesso</p><h2 id="recovery-title" class="mt-2 text-xl font-bold text-slate-900">Redefinir senha</h2></div>
+        <button id="close-recovery" type="button" aria-label="Fechar" class="grid size-9 place-items-center rounded-xl text-slate-500 hover:bg-slate-100"><svg viewBox="0 0 24 24" class="size-5" fill="none" aria-hidden="true"><path d="m7 7 10 10M17 7 7 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+      </div>
+      <p class="mt-4 text-sm leading-6 text-slate-500">Informe seu e-mail. Neste protótipo, simularemos o envio das instruções.</p>
+      <label for="recovery-email" class="mt-5 mb-2 block text-sm font-bold text-slate-700">E-mail corporativo</label>
+      <input id="recovery-email" type="email" placeholder="nome@clinica.com.br" class="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-sky-900 focus:ring-2 focus:ring-sky-900/20" />
+      <p id="recovery-error" class="mt-2 hidden text-xs font-semibold text-rose-600">Informe um e-mail válido.</p>
+      <button id="send-recovery" type="button" class="mt-6 w-full rounded-xl bg-sky-900 px-5 py-3.5 text-sm font-bold text-white hover:bg-sky-800">Enviar instruções</button>
+      <div id="recovery-success" class="mt-4 hidden rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-sm font-semibold text-emerald-700">Instruções enviadas para o e-mail informado.</div>
+    </div>
+  </div>
+
+  <script>
+    const form = document.querySelector('#clinic-login-form');
+    const email = document.querySelector('#email');
+    const password = document.querySelector('#password');
+    const alertBox = document.querySelector('#login-alert');
+    const alertMessage = document.querySelector('#login-alert-message');
+    const successAlert = document.querySelector('#success-alert');
+    const submitButton = document.querySelector('#submit-button');
+    const submitLabel = document.querySelector('#submit-label');
+    const submitSpinner = document.querySelector('#submit-spinner');
+    const accounts = [
+      { email: 'admin@meulaudo.com.br', password: '123456', name: 'Mariana Costa', role: 'ADMINISTRADOR' },
+      { email: 'operador@meulaudo.com.br', password: '123456', name: 'Carlos Lima', role: 'OPERADOR' },
+    ];
+
+    const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    const setFieldError = (input, errorElement, hasError) => {
+      input.classList.toggle('border-rose-600', hasError);
+      input.classList.toggle('bg-rose-50/50', hasError);
+      input.classList.toggle('border-slate-300', !hasError);
+      input.setAttribute('aria-invalid', String(hasError));
+      errorElement.classList.toggle('hidden', !hasError);
+    };
+
+    document.querySelector('#toggle-password').addEventListener('click', () => {
+      const showing = password.type === 'text';
+      password.type = showing ? 'password' : 'text';
+      document.querySelector('#toggle-password').setAttribute('aria-label', showing ? 'Mostrar senha' : 'Ocultar senha');
+    });
+
+    document.querySelector('#fill-demo').addEventListener('click', () => {
+      email.value = 'admin@meulaudo.com.br';
+      password.value = '123456';
+      setFieldError(email, document.querySelector('#email-error'), false);
+      setFieldError(password, document.querySelector('#password-error'), false);
+      alertBox.classList.add('hidden');
+      email.focus();
+    });
+
+    [email, password].forEach((input) => input.addEventListener('input', () => {
+      alertBox.classList.add('hidden');
+      if (input === email && isValidEmail(input.value.trim())) setFieldError(email, document.querySelector('#email-error'), false);
+      if (input === password && input.value.length >= 6) setFieldError(password, document.querySelector('#password-error'), false);
+    }));
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const invalidEmail = !isValidEmail(email.value.trim());
+      const invalidPassword = password.value.length < 6;
+      setFieldError(email, document.querySelector('#email-error'), invalidEmail);
+      setFieldError(password, document.querySelector('#password-error'), invalidPassword);
+      alertBox.classList.add('hidden');
+      successAlert.classList.add('hidden');
+      if (invalidEmail || invalidPassword) {
+        alertMessage.textContent = 'Preencha corretamente o e-mail e a senha para continuar.';
+        alertBox.classList.remove('hidden');
+        (invalidEmail ? email : password).focus();
+        return;
+      }
+
+      const account = accounts.find((item) => item.email === email.value.trim().toLowerCase() && item.password === password.value);
+      if (!account) {
+        alertMessage.textContent = 'E-mail ou senha inválidos. Use a conta de demonstração para testar.';
+        alertBox.classList.remove('hidden');
+        password.focus();
+        return;
+      }
+
+      submitButton.disabled = true;
+      submitLabel.textContent = 'Verificando acesso';
+      submitSpinner.classList.remove('hidden');
+      const session = JSON.stringify({ name: account.name, email: account.email, role: account.role, loggedAt: new Date().toISOString() });
+      sessionStorage.setItem('meulaudoClinicSession', session);
+      if (document.querySelector('#remember').checked) localStorage.setItem('meulaudoClinicSession', session);
+      else localStorage.removeItem('meulaudoClinicSession');
+      setTimeout(() => {
+        successAlert.classList.remove('hidden');
+        alertBox.classList.add('hidden');
+        setTimeout(() => { window.location.href = 'listagem.html'; }, 650);
+      }, 550);
+    });
+
+    const recoveryModal = document.querySelector('#recovery-modal');
+    const openRecovery = () => { recoveryModal.classList.remove('hidden'); recoveryModal.classList.add('flex'); document.querySelector('#recovery-email').value = email.value; document.querySelector('#recovery-email').focus(); };
+    const closeRecovery = () => { recoveryModal.classList.add('hidden'); recoveryModal.classList.remove('flex'); document.querySelector('#recovery-success').classList.add('hidden'); document.querySelector('#recovery-error').classList.add('hidden'); };
+    document.querySelector('#forgot-password').addEventListener('click', openRecovery);
+    document.querySelector('#close-recovery').addEventListener('click', closeRecovery);
+    recoveryModal.addEventListener('click', (event) => { if (event.target === recoveryModal) closeRecovery(); });
+    document.querySelector('#send-recovery').addEventListener('click', () => {
+      const recoveryEmail = document.querySelector('#recovery-email');
+      const invalid = !isValidEmail(recoveryEmail.value.trim());
+      document.querySelector('#recovery-error').classList.toggle('hidden', !invalid);
+      recoveryEmail.classList.toggle('border-rose-600', invalid);
+      if (invalid) return recoveryEmail.focus();
+      document.querySelector('#recovery-success').classList.remove('hidden');
+    });
+    document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && !recoveryModal.classList.contains('hidden')) closeRecovery(); });
+  </script>
+</body>
+</html>

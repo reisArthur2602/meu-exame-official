@@ -1,0 +1,804 @@
+<!doctype html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            name="description"
+            content="MeuLaudo: entrega digital de exames com segurança, agilidade e conformidade com a LGPD."
+        />
+        <title>MeuLaudo — Entrega de exames online</title>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+            rel="stylesheet"
+        />
+
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+        <style type="text/tailwindcss">
+            @theme {
+                --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+            }
+
+            @layer base {
+                * {
+                    @apply box-border;
+                }
+
+                html {
+                    @apply scroll-smooth;
+                }
+
+                body {
+                    @apply min-h-screen bg-slate-50 font-sans text-slate-700 antialiased;
+                }
+
+                button,
+                a {
+                    @apply outline-none;
+                }
+            }
+
+            @keyframes report-float {
+                0%,
+                100% {
+                    transform: translateY(0);
+                }
+                50% {
+                    transform: translateY(-8px);
+                }
+            }
+
+            .report-float {
+                animation: report-float 5s ease-in-out infinite;
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                *,
+                *::before,
+                *::after {
+                    scroll-behavior: auto !important;
+                    animation-duration: 0.01ms !important;
+                    animation-iteration-count: 1 !important;
+                    transition-duration: 0.01ms !important;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <header class="sticky top-0 z-40 border-b border-slate-200/80 bg-white/95 backdrop-blur">
+            <div
+                class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8"
+            >
+                <a
+                    href="index.html"
+                    aria-label="Ir para o início"
+                    class="group inline-flex items-center gap-3 rounded-xl focus-visible:ring-2 focus-visible:ring-sky-900 focus-visible:ring-offset-2"
+                >
+                    <span
+                        class="relative grid size-11 place-items-center overflow-hidden rounded-2xl bg-sky-900 text-white shadow-sm transition group-hover:-translate-y-0.5"
+                    >
+                        <svg viewBox="0 0 24 24" class="size-6" fill="none" aria-hidden="true">
+                            <path
+                                d="M7 3.75h7.25L18 7.5v12.75H7V3.75Z"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linejoin="round"
+                            />
+                            <path
+                                d="M14 3.75V7.5h4"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linejoin="round"
+                            />
+                            <path
+                                d="M9.25 13h1.5l1-2.25 1.5 4 1-2h1.5"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                        </svg>
+                        <span class="absolute inset-x-0 bottom-0 h-1 bg-sky-400"></span>
+                    </span>
+
+                    <span>
+                        <span class="block text-lg font-extrabold tracking-tight text-sky-900"
+                            >MeuLaudo</span
+                        >
+                        <span class="hidden text-xs font-medium text-slate-500 sm:block"
+                            >Exames digitais, cuidado presente</span
+                        >
+                    </span>
+                </a>
+
+                <nav class="hidden items-center gap-7 md:flex" aria-label="Navegação principal">
+                    <a
+                        href="#beneficios"
+                        class="text-sm font-semibold text-slate-600 transition hover:text-sky-900 focus-visible:ring-2 focus-visible:ring-sky-900 focus-visible:ring-offset-4"
+                        >Benefícios</a
+                    >
+                    <a
+                        href="#seguranca"
+                        class="text-sm font-semibold text-slate-600 transition hover:text-sky-900 focus-visible:ring-2 focus-visible:ring-sky-900 focus-visible:ring-offset-4"
+                        >Segurança</a
+                    >
+                    <a
+                        href="design-system.html"
+                        class="text-sm font-semibold text-slate-600 transition hover:text-sky-900 focus-visible:ring-2 focus-visible:ring-sky-900 focus-visible:ring-offset-4"
+                        >Design System</a
+                    >
+                </nav>
+
+                <div class="hidden items-center gap-3 md:flex">
+                    <a
+                        href="auth.html"
+                        class="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-bold text-slate-700 shadow-sm transition hover:border-sky-700 hover:text-sky-900 focus-visible:ring-2 focus-visible:ring-sky-900 focus-visible:ring-offset-2"
+                    >
+                        Portal da Clínica
+                    </a>
+
+                    <a
+                        href="login.html"
+                        class="inline-flex items-center justify-center rounded-xl bg-sky-900 px-4 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-sky-800 focus-visible:ring-2 focus-visible:ring-sky-900 focus-visible:ring-offset-2"
+                    >
+                        Área do Paciente
+                    </a>
+                </div>
+
+                <button
+                    id="menu-button"
+                    type="button"
+                    aria-label="Abrir menu"
+                    aria-expanded="false"
+                    aria-controls="mobile-menu"
+                    class="grid size-11 place-items-center rounded-xl border border-slate-300 bg-white text-slate-700 shadow-sm transition hover:border-sky-700 hover:text-sky-900 focus-visible:ring-2 focus-visible:ring-sky-900 focus-visible:ring-offset-2 md:hidden"
+                >
+                    <svg
+                        id="menu-open-icon"
+                        viewBox="0 0 24 24"
+                        class="size-5"
+                        fill="none"
+                        aria-hidden="true"
+                    >
+                        <path
+                            d="M4 7h16M4 12h16M4 17h16"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                        />
+                    </svg>
+                    <svg
+                        id="menu-close-icon"
+                        viewBox="0 0 24 24"
+                        class="hidden size-5"
+                        fill="none"
+                        aria-hidden="true"
+                    >
+                        <path
+                            d="m6 6 12 12M18 6 6 18"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                        />
+                    </svg>
+                </button>
+            </div>
+
+            <div
+                id="mobile-menu"
+                class="hidden border-t border-slate-200 bg-white px-4 py-4 md:hidden"
+            >
+                <nav class="mx-auto flex max-w-7xl flex-col gap-2" aria-label="Navegação móvel">
+                    <a
+                        href="#beneficios"
+                        class="rounded-xl px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-100"
+                        >Benefícios</a
+                    >
+                    <a
+                        href="#seguranca"
+                        class="rounded-xl px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-100"
+                        >Segurança</a
+                    >
+                    <a
+                        href="design-system.html"
+                        class="rounded-xl px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-100"
+                        >Design System</a
+                    >
+
+                    <div class="mt-2 grid gap-3 border-t border-slate-200 pt-4">
+                        <a
+                            href="auth.html"
+                            class="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-bold text-slate-700 shadow-sm"
+                        >
+                            Portal da Clínica
+                        </a>
+                        <a
+                            href="login.html"
+                            class="inline-flex items-center justify-center rounded-xl bg-sky-900 px-4 py-3 text-sm font-bold text-white shadow-sm"
+                        >
+                            Área do Paciente
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <main>
+            <section class="relative overflow-hidden bg-white">
+                <div
+                    class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-sky-200 to-transparent"
+                ></div>
+                <div
+                    class="absolute -right-28 top-28 size-80 rounded-full bg-sky-100/70 blur-3xl"
+                ></div>
+                <div
+                    class="absolute -left-40 bottom-0 size-96 rounded-full bg-slate-100 blur-3xl"
+                ></div>
+
+                <div
+                    class="relative mx-auto grid max-w-7xl items-center gap-14 px-4 py-16 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-8 lg:py-24"
+                >
+                    <div>
+                        <div
+                            class="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-emerald-700"
+                        >
+                            <svg viewBox="0 0 24 24" class="size-4" fill="none" aria-hidden="true">
+                                <path
+                                    d="m5 12 4 4L19 6"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+                            </svg>
+                            Em conformidade com a LGPD
+                        </div>
+
+                        <h1
+                            class="mt-6 max-w-3xl text-4xl font-extrabold tracking-[-0.045em] text-sky-900 sm:text-5xl lg:text-6xl"
+                        >
+                            O laudo chega antes. O cuidado continua perto.
+                        </h1>
+
+                        <p
+                            class="mt-6 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg sm:leading-8"
+                        >
+                            O MeuLaudo conecta clínicas, laboratórios e pacientes em uma entrega
+                            digital simples, segura e sem papel. Menos espera no balcão, mais
+                            agilidade para quem precisa do resultado.
+                        </p>
+
+                        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+                            <a
+                                href="login.html"
+                                class="inline-flex items-center justify-center gap-2 rounded-xl bg-sky-900 px-6 py-3.5 text-sm font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-sky-800 hover:shadow-md focus-visible:ring-2 focus-visible:ring-sky-900 focus-visible:ring-offset-2"
+                            >
+                                Consultar meu exame
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    class="size-4"
+                                    fill="none"
+                                    aria-hidden="true"
+                                >
+                                    <path
+                                        d="M5 12h14M13 6l6 6-6 6"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    />
+                                </svg>
+                            </a>
+
+                            <a
+                                href="auth.html"
+                                class="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-6 py-3.5 text-sm font-bold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-sky-700 hover:text-sky-900 hover:shadow-md focus-visible:ring-2 focus-visible:ring-sky-900 focus-visible:ring-offset-2"
+                            >
+                                Entrar no Portal da Clínica
+                            </a>
+                        </div>
+
+                        <div class="mt-9 flex flex-wrap gap-x-7 gap-y-3 text-sm text-slate-500">
+                            <span class="inline-flex items-center gap-2">
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    class="size-4 text-emerald-600"
+                                    fill="none"
+                                    aria-hidden="true"
+                                >
+                                    <path
+                                        d="m5 12 4 4L19 6"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    />
+                                </svg>
+                                Acesso por CPF e protocolo
+                            </span>
+
+                            <span class="inline-flex items-center gap-2">
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    class="size-4 text-emerald-600"
+                                    fill="none"
+                                    aria-hidden="true"
+                                >
+                                    <path
+                                        d="m5 12 4 4L19 6"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    />
+                                </svg>
+                                Disponível em qualquer dispositivo
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="relative mx-auto w-full max-w-xl">
+                        <div
+                            class="absolute -inset-5 rounded-[2rem] border border-sky-100 bg-sky-50/60"
+                        ></div>
+
+                        <div
+                            class="report-float relative overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white shadow-xl shadow-sky-900/10"
+                        >
+                            <div
+                                class="flex items-center justify-between border-b border-slate-200 px-5 py-4"
+                            >
+                                <div class="flex items-center gap-3">
+                                    <span
+                                        class="grid size-10 place-items-center rounded-2xl bg-sky-900 text-white"
+                                    >
+                                        <svg
+                                            viewBox="0 0 24 24"
+                                            class="size-5"
+                                            fill="none"
+                                            aria-hidden="true"
+                                        >
+                                            <path
+                                                d="M7 3.75h7.25L18 7.5v12.75H7V3.75Z"
+                                                stroke="currentColor"
+                                                stroke-width="1.7"
+                                                stroke-linejoin="round"
+                                            />
+                                            <path
+                                                d="M14 3.75V7.5h4"
+                                                stroke="currentColor"
+                                                stroke-width="1.7"
+                                                stroke-linejoin="round"
+                                            />
+                                        </svg>
+                                    </span>
+                                    <div>
+                                        <p class="text-sm font-bold text-slate-900">
+                                            Resultado disponível
+                                        </p>
+                                        <p class="text-xs text-slate-500">Protocolo ML-2026-1048</p>
+                                    </div>
+                                </div>
+
+                                <span
+                                    class="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-bold text-emerald-700 ring-1 ring-inset ring-emerald-600/20"
+                                >
+                                    <span class="size-2 rounded-full bg-emerald-600"></span>
+                                    Disponível
+                                </span>
+                            </div>
+
+                            <div class="p-5 sm:p-6">
+                                <div class="flex items-start justify-between gap-4">
+                                    <div>
+                                        <p
+                                            class="text-xs font-bold uppercase tracking-[0.14em] text-slate-400"
+                                        >
+                                            Paciente
+                                        </p>
+                                        <h2 class="mt-2 text-xl font-bold text-slate-900">
+                                            Anderson Costa
+                                        </h2>
+                                        <p class="mt-1 text-sm text-slate-500">
+                                            CPF •••.•••.•••-00
+                                        </p>
+                                    </div>
+
+                                    <span
+                                        class="grid size-12 place-items-center rounded-2xl bg-sky-50 text-sky-900"
+                                    >
+                                        <svg
+                                            viewBox="0 0 24 24"
+                                            class="size-6"
+                                            fill="none"
+                                            aria-hidden="true"
+                                        >
+                                            <path
+                                                d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM4.5 20c.7-3.5 3.4-5.5 7.5-5.5s6.8 2 7.5 5.5"
+                                                stroke="currentColor"
+                                                stroke-width="1.8"
+                                                stroke-linecap="round"
+                                            />
+                                        </svg>
+                                    </span>
+                                </div>
+
+                                <div class="my-6 h-px bg-slate-100"></div>
+
+                                <div class="rounded-2xl bg-slate-50 p-5">
+                                    <div class="flex items-start justify-between gap-4">
+                                        <div>
+                                            <p
+                                                class="text-xs font-bold uppercase tracking-[0.14em] text-slate-400"
+                                            >
+                                                Exame
+                                            </p>
+                                            <h3 class="mt-2 text-lg font-bold text-slate-900">
+                                                Hemograma completo
+                                            </h3>
+                                            <p class="mt-1 text-sm text-slate-500">
+                                                Realizado em 28/06/2026
+                                            </p>
+                                        </div>
+
+                                        <span
+                                            class="grid size-10 shrink-0 place-items-center rounded-xl bg-white text-sky-900 shadow-sm"
+                                        >
+                                            <svg
+                                                viewBox="0 0 24 24"
+                                                class="size-5"
+                                                fill="none"
+                                                aria-hidden="true"
+                                            >
+                                                <path
+                                                    d="M8 3.5h8M9 3.5v3l-3 5v6.5A2.5 2.5 0 0 0 8.5 20h7a2.5 2.5 0 0 0 2.5-2.5V11l-3-4.5v-3"
+                                                    stroke="currentColor"
+                                                    stroke-width="1.7"
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                />
+                                                <path
+                                                    d="M7 13h10"
+                                                    stroke="currentColor"
+                                                    stroke-width="1.7"
+                                                    stroke-linecap="round"
+                                                />
+                                            </svg>
+                                        </span>
+                                    </div>
+
+                                    <button
+                                        type="button"
+                                        class="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-sky-900 px-5 py-3 text-sm font-bold text-white shadow-sm"
+                                    >
+                                        Baixar laudo em PDF
+                                        <svg
+                                            viewBox="0 0 24 24"
+                                            class="size-4"
+                                            fill="none"
+                                            aria-hidden="true"
+                                        >
+                                            <path
+                                                d="M12 3v12m0 0 4-4m-4 4-4-4M5 20h14"
+                                                stroke="currentColor"
+                                                stroke-width="1.8"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                            />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="bg-sky-900 px-5 py-4 text-white">
+                                <svg
+                                    viewBox="0 0 360 36"
+                                    class="w-full opacity-90"
+                                    fill="none"
+                                    aria-hidden="true"
+                                >
+                                    <path
+                                        d="M2 20h67l9-11 14 21 12-16 9 6h55l10-14 16 26 13-19 9 7h142"
+                                        stroke="currentColor"
+                                        stroke-width="2.5"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    />
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div
+                            class="absolute -bottom-8 -left-5 hidden rounded-2xl border border-slate-200 bg-white p-4 shadow-lg sm:block"
+                        >
+                            <div class="flex items-center gap-3">
+                                <span
+                                    class="grid size-10 place-items-center rounded-xl bg-emerald-50 text-emerald-600"
+                                >
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        class="size-5"
+                                        fill="none"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            d="M12 3 5 6v5c0 4.3 2.7 7.7 7 10 4.3-2.3 7-5.7 7-10V6l-7-3Z"
+                                            stroke="currentColor"
+                                            stroke-width="1.8"
+                                            stroke-linejoin="round"
+                                        />
+                                        <path
+                                            d="m9 12 2 2 4-4"
+                                            stroke="currentColor"
+                                            stroke-width="1.8"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        />
+                                    </svg>
+                                </span>
+                                <div>
+                                    <p class="text-sm font-bold text-slate-900">Dados protegidos</p>
+                                    <p class="text-xs text-slate-500">
+                                        Acesso individual e rastreável
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="beneficios" class="border-y border-slate-200 bg-slate-50">
+                <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+                    <div class="max-w-3xl">
+                        <p class="text-sm font-bold uppercase tracking-[0.16em] text-sky-700">
+                            Da recepção ao resultado
+                        </p>
+                        <h2
+                            class="mt-3 text-3xl font-extrabold tracking-tight text-sky-900 sm:text-4xl"
+                        >
+                            Uma entrega mais leve para a clínica e para o paciente.
+                        </h2>
+                        <p class="mt-5 text-base leading-7 text-slate-600">
+                            O MeuLaudo elimina etapas manuais e cria uma experiência consistente,
+                            desde o envio do arquivo até o download do resultado.
+                        </p>
+                    </div>
+
+                    <div class="mt-10 grid gap-5 md:grid-cols-3">
+                        <article
+                            class="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-sky-200 hover:shadow-md"
+                        >
+                            <span
+                                class="grid size-12 place-items-center rounded-2xl bg-sky-50 text-sky-900 transition group-hover:bg-sky-900 group-hover:text-white"
+                            >
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    class="size-6"
+                                    fill="none"
+                                    aria-hidden="true"
+                                >
+                                    <path
+                                        d="M7 8V4h10v4M7 17H5a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    />
+                                    <path
+                                        d="M7 14h10v7H7v-7Z"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                        stroke-linejoin="round"
+                                    />
+                                </svg>
+                            </span>
+
+                            <h3 class="mt-5 text-xl font-bold text-slate-900">
+                                Reduza impressão e retrabalho
+                            </h3>
+                            <p class="mt-3 text-sm leading-6 text-slate-600">
+                                Centralize os laudos em um portal digital e diminua custos com
+                                papel, toner, armazenamento e reemissão.
+                            </p>
+                        </article>
+
+                        <article
+                            id="seguranca"
+                            class="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-sky-200 hover:shadow-md"
+                        >
+                            <span
+                                class="grid size-12 place-items-center rounded-2xl bg-sky-50 text-sky-900 transition group-hover:bg-sky-900 group-hover:text-white"
+                            >
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    class="size-6"
+                                    fill="none"
+                                    aria-hidden="true"
+                                >
+                                    <path
+                                        d="M12 3 5 6v5c0 4.3 2.7 7.7 7 10 4.3-2.3 7-5.7 7-10V6l-7-3Z"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                        stroke-linejoin="round"
+                                    />
+                                    <path
+                                        d="M9.5 12a2.5 2.5 0 1 1 5 0v3h-5v-3Z"
+                                        stroke="currentColor"
+                                        stroke-width="1.7"
+                                        stroke-linejoin="round"
+                                    />
+                                </svg>
+                            </span>
+
+                            <h3 class="mt-5 text-xl font-bold text-slate-900">
+                                Criptografia de ponta a ponta
+                            </h3>
+                            <p class="mt-3 text-sm leading-6 text-slate-600">
+                                Proteja documentos e dados pessoais com acesso autenticado,
+                                transmissão segura e rastreabilidade de ações.
+                            </p>
+                        </article>
+
+                        <article
+                            class="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-sky-200 hover:shadow-md"
+                        >
+                            <span
+                                class="grid size-12 place-items-center rounded-2xl bg-sky-50 text-sky-900 transition group-hover:bg-sky-900 group-hover:text-white"
+                            >
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    class="size-6"
+                                    fill="none"
+                                    aria-hidden="true"
+                                >
+                                    <path
+                                        d="M5 5h14v11H8l-3 3V5Z"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                        stroke-linejoin="round"
+                                    />
+                                    <path
+                                        d="M8.5 9h7M8.5 12h4"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                        stroke-linecap="round"
+                                    />
+                                </svg>
+                            </span>
+
+                            <h3 class="mt-5 text-xl font-bold text-slate-900">
+                                Notificação automatizada
+                            </h3>
+                            <p class="mt-3 text-sm leading-6 text-slate-600">
+                                Avise o paciente por SMS ou e-mail assim que o laudo estiver
+                                disponível, sem ligações ou conferências manuais.
+                            </p>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-sky-900 text-white">
+                <div
+                    class="mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 md:grid-cols-[1fr_auto] lg:px-8"
+                >
+                    <div>
+                        <p class="text-sm font-bold uppercase tracking-[0.16em] text-sky-200">
+                            Resultado sem espera desnecessária
+                        </p>
+                        <h2 class="mt-3 text-3xl font-extrabold tracking-tight">
+                            Seu exame pode estar a poucos cliques.
+                        </h2>
+                        <p class="mt-4 max-w-2xl text-sm leading-6 text-sky-100">
+                            Tenha em mãos o CPF e o protocolo do exame para consultar seu resultado.
+                        </p>
+                    </div>
+
+                    <a
+                        href="login.html"
+                        class="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-6 py-3.5 text-sm font-bold text-sky-900 shadow-sm transition hover:-translate-y-0.5 hover:bg-sky-50 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-sky-900"
+                    >
+                        Consultar meu exame
+                        <svg viewBox="0 0 24 24" class="size-4" fill="none" aria-hidden="true">
+                            <path
+                                d="M5 12h14M13 6l6 6-6 6"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                        </svg>
+                    </a>
+                </div>
+            </section>
+        </main>
+
+        <footer class="border-t border-slate-200 bg-white">
+            <div
+                class="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-[1fr_auto] lg:px-8"
+            >
+                <div>
+                    <a
+                        href="index.html"
+                        class="inline-flex items-center gap-3 rounded-xl focus-visible:ring-2 focus-visible:ring-sky-900 focus-visible:ring-offset-2"
+                    >
+                        <span
+                            class="grid size-10 place-items-center rounded-2xl bg-sky-900 text-white"
+                        >
+                            <svg viewBox="0 0 24 24" class="size-5" fill="none" aria-hidden="true">
+                                <path
+                                    d="M7 3.75h7.25L18 7.5v12.75H7V3.75Z"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linejoin="round"
+                                />
+                                <path
+                                    d="M14 3.75V7.5h4"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linejoin="round"
+                                />
+                            </svg>
+                        </span>
+                        <span class="font-extrabold text-sky-900">MeuLaudo</span>
+                    </a>
+
+                    <p class="mt-4 max-w-md text-sm leading-6 text-slate-500">
+                        Plataforma de entrega digital de exames para clínicas, laboratórios e
+                        pacientes.
+                    </p>
+                </div>
+
+                <div class="flex flex-wrap gap-x-6 gap-y-3 text-sm font-semibold text-slate-600">
+                    <a href="login.html" class="hover:text-sky-900">Área do Paciente</a>
+                    <a href="auth.html" class="hover:text-sky-900">Portal da Clínica</a>
+                    <a href="design-system.html" class="hover:text-sky-900">Design System</a>
+                </div>
+            </div>
+
+            <div class="border-t border-slate-200">
+                <div
+                    class="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-5 text-xs text-slate-500 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8"
+                >
+                    <p>© 2026 MeuLaudo. Todos os direitos reservados.</p>
+                    <p>Privacidade e segurança em conformidade com a LGPD.</p>
+                </div>
+            </div>
+        </footer>
+
+        <script>
+            const menuButton = document.querySelector('#menu-button');
+            const mobileMenu = document.querySelector('#mobile-menu');
+            const menuOpenIcon = document.querySelector('#menu-open-icon');
+            const menuCloseIcon = document.querySelector('#menu-close-icon');
+
+            const toggleMenu = () => {
+                const isOpen = menuButton.getAttribute('aria-expanded') === 'true';
+
+                menuButton.setAttribute('aria-expanded', String(!isOpen));
+                mobileMenu.classList.toggle('hidden', isOpen);
+                menuOpenIcon.classList.toggle('hidden', !isOpen);
+                menuCloseIcon.classList.toggle('hidden', isOpen);
+                menuButton.setAttribute('aria-label', isOpen ? 'Abrir menu' : 'Fechar menu');
+            };
+
+            menuButton.addEventListener('click', toggleMenu);
+
+            mobileMenu.querySelectorAll('a').forEach((link) => {
+                link.addEventListener('click', () => {
+                    menuButton.setAttribute('aria-expanded', 'false');
+                    mobileMenu.classList.add('hidden');
+                    menuOpenIcon.classList.remove('hidden');
+                    menuCloseIcon.classList.add('hidden');
+                    menuButton.setAttribute('aria-label', 'Abrir menu');
+                });
+            });
+        </script>
+    </body>
+</html>

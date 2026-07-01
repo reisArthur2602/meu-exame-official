@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Consulte um exame na plataforma MeuLaudo usando CPF e protocolo." />
+  <title>MeuLaudo — Área do Paciente</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <style type="text/tailwindcss">
+    @theme {
+      --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+    }
+
+    @layer base {
+      * {
+        @apply box-border;
+      }
+
+      body {
+        @apply min-h-screen bg-slate-50 font-sans text-slate-700 antialiased;
+      }
+
+      button,
+      a,
+      input {
+        @apply outline-none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="flex min-h-screen flex-col">
+  <header class="border-b border-slate-200 bg-white">
+    <div class="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+      <a href="index.html" class="group inline-flex items-center gap-3 rounded-xl focus-visible:ring-2 focus-visible:ring-sky-900 focus-visible:ring-offset-2">
+        <span class="relative grid size-11 place-items-center overflow-hidden rounded-2xl bg-sky-900 text-white shadow-sm">
+          <svg viewBox="0 0 24 24" class="size-6" fill="none" aria-hidden="true">
+            <path d="M7 3.75h7.25L18 7.5v12.75H7V3.75Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+            <path d="M14 3.75V7.5h4" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+            <path d="M9.25 13h1.5l1-2.25 1.5 4 1-2h1.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="absolute inset-x-0 bottom-0 h-1 bg-sky-400"></span>
+        </span>
+
+        <span>
+          <span class="block text-lg font-extrabold tracking-tight text-sky-900">MeuLaudo</span>
+          <span class="block text-xs font-medium text-slate-500">Área do Paciente</span>
+        </span>
+      </a>
+
+      <a href="index.html" class="inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-bold text-slate-600 transition hover:bg-slate-100 hover:text-sky-900 focus-visible:ring-2 focus-visible:ring-sky-900 focus-visible:ring-offset-2">
+        <svg viewBox="0 0 24 24" class="size-4" fill="none" aria-hidden="true">
+          <path d="m14 6-6 6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Voltar ao início
+      </a>
+    </div>
+  </header>
+
+  <main class="relative flex flex-1 items-center overflow-hidden">
+    <div class="absolute -right-32 top-16 size-96 rounded-full bg-sky-100/70 blur-3xl"></div>
+    <div class="absolute -left-40 bottom-0 size-96 rounded-full bg-slate-200/60 blur-3xl"></div>
+
+    <div class="relative mx-auto grid w-full max-w-6xl items-center gap-10 px-4 py-10 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:px-8 lg:py-16">
+      <section class="hidden lg:block" aria-labelledby="login-intro-title">
+        <div class="max-w-md">
+          <span class="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-emerald-700">
+            <svg viewBox="0 0 24 24" class="size-4" fill="none" aria-hidden="true">
+              <path d="M12 3 5 6v5c0 4.3 2.7 7.7 7 10 4.3-2.3 7-5.7 7-10V6l-7-3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+              <path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Acesso seguro
+          </span>
+
+          <h1 id="login-intro-title" class="mt-6 text-4xl font-extrabold tracking-[-0.04em] text-sky-900">
+            Seus resultados, protegidos e disponíveis quando você precisar.
+          </h1>
+
+          <p class="mt-5 text-base leading-7 text-slate-600">
+            Use o CPF do paciente e o protocolo informado no comprovante entregue pela clínica.
+          </p>
+
+          <div class="mt-8 rounded-3xl bg-sky-900 p-6 text-white shadow-sm">
+            <svg viewBox="0 0 360 42" class="w-full text-sky-200" fill="none" aria-hidden="true">
+              <path d="M2 24h67l9-13 14 25 12-19 10 7h55l10-16 16 30 13-22 9 8h141" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+
+            <div class="mt-5 grid grid-cols-2 gap-4 border-t border-white/15 pt-5">
+              <div>
+                <p class="text-xs font-bold uppercase tracking-[0.14em] text-sky-200">Privacidade</p>
+                <p class="mt-2 text-sm font-semibold">Dados protegidos pela LGPD</p>
+              </div>
+
+              <div>
+                <p class="text-xs font-bold uppercase tracking-[0.14em] text-sky-200">Disponibilidade</p>
+                <p class="mt-2 text-sm font-semibold">Acesso em celular ou computador</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="login-title">
+        <div class="mx-auto w-full max-w-lg rounded-3xl border border-slate-200 bg-white p-6 shadow-xl shadow-sky-900/5 sm:p-8">
+          <div>
+            <p class="text-sm font-bold uppercase tracking-[0.16em] text-sky-700">Consulta de exames</p>
+            <h2 id="login-title" class="mt-3 text-3xl font-extrabold tracking-tight text-sky-900">Consulte seu exame</h2>
+            <p class="mt-3 text-sm leading-6 text-slate-500">
+              Preencha os dados exatamente como foram informados no atendimento.
+            </p>
+          </div>
+
+          <div id="form-alert" role="alert" aria-live="assertive" class="mt-6 hidden rounded-2xl border border-rose-200 bg-rose-50 p-4">
+            <div class="flex items-start gap-3">
+              <span class="mt-0.5 grid size-8 shrink-0 place-items-center rounded-xl bg-rose-100 text-rose-600">
+                <svg viewBox="0 0 24 24" class="size-5" fill="none" aria-hidden="true">
+                  <path d="M12 8v5m0 3.2v.1M12 3.5 21 20H3L12 3.5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+
+              <div>
+                <p class="text-sm font-bold text-rose-800">Revise os dados de acesso</p>
+                <p id="form-alert-message" class="mt-1 text-sm leading-5 text-rose-700">
+                  Preencha os campos destacados para continuar.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div id="success-alert" role="status" aria-live="polite" class="mt-6 hidden rounded-2xl border border-emerald-200 bg-emerald-50 p-4">
+            <div class="flex items-center gap-3">
+              <span class="grid size-8 place-items-center rounded-xl bg-emerald-100 text-emerald-600">
+                <svg viewBox="0 0 24 24" class="size-5" fill="none" aria-hidden="true">
+                  <path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <p class="text-sm font-bold text-emerald-800">Exame localizado. Abrindo seu exame...</p>
+            </div>
+          </div>
+
+          <form id="patient-login-form" class="mt-7 space-y-5" novalidate>
+            <div>
+              <label for="cpf" class="mb-2 block text-sm font-bold text-slate-700">
+                CPF do paciente
+              </label>
+
+              <div class="relative">
+                <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">
+                  <svg viewBox="0 0 24 24" class="size-5" fill="none" aria-hidden="true">
+                    <path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM4.5 20c.7-3.5 3.4-5.5 7.5-5.5s6.8 2 7.5 5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                  </svg>
+                </span>
+
+                <input
+                  id="cpf"
+                  name="cpf"
+                  type="text"
+                  inputmode="numeric"
+                  autocomplete="off"
+                  maxlength="14"
+                  placeholder="000.000.000-00"
+                  aria-describedby="cpf-help cpf-error"
+                  class="w-full rounded-xl border border-slate-300 bg-white py-3.5 pl-12 pr-4 text-sm font-medium text-slate-900 placeholder:text-slate-400 transition focus:border-sky-900 focus:ring-2 focus:ring-sky-900/20"
+                />
+              </div>
+
+              <p id="cpf-help" class="mt-2 text-xs text-slate-500">Digite apenas os números; a máscara será aplicada automaticamente.</p>
+              <p id="cpf-error" class="mt-2 hidden text-xs font-semibold text-rose-600">Informe um CPF com 11 dígitos.</p>
+            </div>
+
+            <div>
+              <label for="protocol" class="mb-2 block text-sm font-bold text-slate-700">
+                Protocolo do exame
+              </label>
+
+              <div class="relative">
+                <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">
+                  <svg viewBox="0 0 24 24" class="size-5" fill="none" aria-hidden="true">
+                    <path d="M14.5 9.5a4 4 0 1 0-1.2 2.9L21 20v-3h-3v-3h-3l-1.5-1.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+
+                <input
+                  id="protocol"
+                  name="protocol"
+                  type="text"
+                  autocomplete="off"
+                  placeholder="Ex.: ML-2026-1048"
+                  aria-describedby="protocol-help protocol-error"
+                  class="w-full rounded-xl border border-slate-300 bg-white py-3.5 pl-12 pr-4 text-sm font-medium uppercase tracking-wide text-slate-900 placeholder:normal-case placeholder:tracking-normal placeholder:text-slate-400 transition focus:border-sky-900 focus:ring-2 focus:ring-sky-900/20"
+                />
+              </div>
+
+              <p id="protocol-help" class="mt-2 text-xs text-slate-500">O protocolo está no comprovante entregue pela clínica.</p>
+              <p id="protocol-error" class="mt-2 hidden text-xs font-semibold text-rose-600">Informe o protocolo do exame.</p>
+            </div>
+
+            <button id="submit-button" type="submit" class="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-sky-900 px-5 py-3.5 text-sm font-bold text-white shadow-sm transition hover:bg-sky-800 focus-visible:ring-2 focus-visible:ring-sky-900 focus-visible:ring-offset-2 active:translate-y-px">
+              <span id="submit-label">Consultar exame</span>
+              <svg id="submit-arrow" viewBox="0 0 24 24" class="size-4" fill="none" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <svg id="submit-spinner" viewBox="0 0 24 24" class="hidden size-5 animate-spin" fill="none" aria-hidden="true">
+                <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="3" class="opacity-30"/>
+                <path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </form>
+
+          <div class="mt-7 border-t border-slate-200 pt-6">
+            <div class="flex items-start gap-3 rounded-2xl bg-slate-50 p-4">
+              <span class="grid size-9 shrink-0 place-items-center rounded-xl bg-white text-sky-900 shadow-sm">
+                <svg viewBox="0 0 24 24" class="size-5" fill="none" aria-hidden="true">
+                  <path d="M12 17v.01M9.5 9.5a2.5 2.5 0 1 1 3.7 2.2c-.8.4-1.2 1-1.2 1.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                  <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/>
+                </svg>
+              </span>
+
+              <div>
+                <p class="text-sm font-bold text-slate-800">Não encontrou o protocolo?</p>
+                <p class="mt-1 text-xs leading-5 text-slate-500">
+                  Entre em contato com a clínica onde realizou o exame para confirmar o protocolo.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="border-t border-slate-200 bg-white">
+    <div class="mx-auto flex w-full max-w-7xl flex-col gap-2 px-4 py-5 text-xs text-slate-500 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
+      <p>© 2026 MeuLaudo. Todos os direitos reservados.</p>
+      <p>Ambiente protegido e em conformidade com a LGPD.</p>
+    </div>
+  </footer>
+
+  <script>
+    const form = document.querySelector('#patient-login-form');
+    const cpfInput = document.querySelector('#cpf');
+    const protocolInput = document.querySelector('#protocol');
+    const formAlert = document.querySelector('#form-alert');
+    const formAlertMessage = document.querySelector('#form-alert-message');
+    const successAlert = document.querySelector('#success-alert');
+    const submitButton = document.querySelector('#submit-button');
+    const submitLabel = document.querySelector('#submit-label');
+    const submitArrow = document.querySelector('#submit-arrow');
+    const submitSpinner = document.querySelector('#submit-spinner');
+
+    const fieldConfig = {
+      cpf: {
+        input: cpfInput,
+        error: document.querySelector('#cpf-error'),
+      },
+      protocol: {
+        input: protocolInput,
+        error: document.querySelector('#protocol-error'),
+      },
+    };
+
+    const formatCpf = (value) => {
+      const digits = value.replace(/\D/g, '').slice(0, 11);
+
+      return digits
+        .replace(/^(\d{3})(\d)/, '$1.$2')
+        .replace(/^(\d{3})\.(\d{3})(\d)/, '$1.$2.$3')
+        .replace(/\.(\d{3})(\d)/, '.$1-$2');
+    };
+
+    const setFieldError = (fieldName, hasError) => {
+      const { input, error } = fieldConfig[fieldName];
+
+      input.classList.toggle('border-rose-600', hasError);
+      input.classList.toggle('bg-rose-50/50', hasError);
+      input.classList.toggle('ring-2', hasError);
+      input.classList.toggle('ring-rose-600/15', hasError);
+      input.classList.toggle('border-slate-300', !hasError);
+      input.setAttribute('aria-invalid', String(hasError));
+      error.classList.toggle('hidden', !hasError);
+    };
+
+    const validateForm = () => {
+      const cpfDigits = cpfInput.value.replace(/\D/g, '');
+      const hasCpfError = cpfDigits.length !== 11;
+      const hasProtocolError = protocolInput.value.trim().length === 0;
+
+      setFieldError('cpf', hasCpfError);
+      setFieldError('protocol', hasProtocolError);
+
+      return {
+        isValid: !hasCpfError && !hasProtocolError,
+        hasCpfError,
+        hasProtocolError,
+      };
+    };
+
+    cpfInput.addEventListener('input', (event) => {
+      event.target.value = formatCpf(event.target.value);
+
+      if (event.target.value.replace(/\D/g, '').length === 11) {
+        setFieldError('cpf', false);
+      }
+    });
+
+    protocolInput.addEventListener('input', (event) => {
+      event.target.value = event.target.value.toUpperCase();
+
+      if (event.target.value.trim()) {
+        setFieldError('protocol', false);
+      }
+    });
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      formAlert.classList.add('hidden');
+      successAlert.classList.add('hidden');
+
+      const validation = validateForm();
+
+      if (!validation.isValid) {
+        const message = validation.hasCpfError && validation.hasProtocolError
+          ? 'Informe o CPF completo e o protocolo para continuar.'
+          : validation.hasCpfError
+            ? 'O CPF precisa ter 11 dígitos.'
+            : 'Informe o protocolo fornecido pela clínica.';
+
+        formAlertMessage.textContent = message;
+        formAlert.classList.remove('hidden');
+
+        const firstInvalidField = validation.hasCpfError ? cpfInput : protocolInput;
+        firstInvalidField.focus();
+        return;
+      }
+
+      submitButton.disabled = true;
+      submitButton.classList.add('cursor-wait', 'opacity-90');
+      submitLabel.textContent = 'Validando acesso';
+      submitArrow.classList.add('hidden');
+      submitSpinner.classList.remove('hidden');
+
+      window.setTimeout(() => {
+        successAlert.classList.remove('hidden');
+        formAlert.classList.add('hidden');
+        submitLabel.textContent = 'Exame localizado';
+
+        window.setTimeout(() => {
+          localStorage.setItem('meulaudoConsulta', JSON.stringify({
+            cpf: cpfInput.value,
+            protocolo: protocolInput.value.trim().toUpperCase(),
+          }));
+          window.location.href = 'paciente.html';
+        }, 900);
+      }, 700);
+    });
+  </script>
+</body>
+</html>

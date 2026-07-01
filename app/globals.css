@@ -3,24 +3,91 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  /* Typography tokens (MeuLaudo Design System) */
+  --font-family-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  /* Font sizes */
+  --font-size-xs: 0.75rem; /* 12px — texto de apoio, labels, badges */
+  --font-size-sm: 0.875rem; /* 14px — corpo secundário, inputs, botões */
+  --font-size-base: 1rem; /* 16px — corpo padrão */
+  --font-size-xl: 1.25rem; /* 20px — título de seção */
+  --font-size-3xl: 1.875rem; /* 30px — título de página (mobile) */
+  --font-size-5xl: 3rem; /* 48px — destaque de marca */
+
+  /* Font weights */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+
+  /* Letter spacing */
+  --tracking-tightest: -0.05em;
+  --tracking-tighter: -0.035em;
+  --tracking-tight: -0.025em;
+  --tracking-normal: 0em;
+  --tracking-wide: 0.025em;
+  --tracking-wider-badge: 0.16em; /* eyebrows/labels em maiúsculas */
+  --tracking-widest-badge: 0.18em; /* eyebrows destacados */
+
+  /* Line heights */
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625; /* corpo de texto (leading-7) */
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-family-sans);
+  --font-mono: ui-monospace, SFMono-Regular, monospace;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-family-sans);
+}
+
+* {
+  scrollbar-color: var(--color-sky-900) transparent;
+  scrollbar-width: thin;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--color-sky-900);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+@keyframes report-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.report-float {
+  animation: report-float 5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .report-float {
+    animation: none;
+  }
 }

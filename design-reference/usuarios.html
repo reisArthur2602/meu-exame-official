@@ -1,0 +1,905 @@
+<!doctype html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            name="description"
+            content="Gerenciamento de usuários do Portal da Clínica MeuLaudo."
+        />
+        <title>MeuLaudo — Gerenciamento de Usuários</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+            rel="stylesheet"
+        />
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+        <style type="text/tailwindcss">
+            @theme {
+                --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+            }
+            @layer base {
+                * {
+                    @apply box-border;
+                }
+                body {
+                    @apply min-h-screen bg-slate-50 font-sans text-slate-700 antialiased;
+                }
+                button,
+                a,
+                input,
+                select {
+                    @apply outline-none;
+                }
+            }
+            @media (prefers-reduced-motion: reduce) {
+                *,
+                *::before,
+                *::after {
+                    animation-duration: 0.01ms !important;
+                    animation-iteration-count: 1 !important;
+                    transition-duration: 0.01ms !important;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <header class="sticky top-0 z-30 border-b border-slate-200 bg-white">
+            <div
+                class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8"
+            >
+                <a
+                    href="listagem.html"
+                    class="inline-flex items-center gap-3 rounded-xl focus-visible:ring-2 focus-visible:ring-sky-900 focus-visible:ring-offset-2"
+                >
+                    <span
+                        class="relative grid size-11 place-items-center overflow-hidden rounded-2xl bg-sky-900 text-white shadow-sm"
+                        ><svg viewBox="0 0 24 24" class="size-6" fill="none" aria-hidden="true">
+                            <path
+                                d="M7 3.75h7.25L18 7.5v12.75H7V3.75Z"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linejoin="round"
+                            />
+                            <path
+                                d="M14 3.75V7.5h4"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linejoin="round"
+                            />
+                            <path
+                                d="M9.25 13h1.5l1-2.25 1.5 4 1-2h1.5"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            /></svg
+                        ><span class="absolute inset-x-0 bottom-0 h-1 bg-sky-400"></span
+                    ></span>
+                    <span
+                        ><span class="block text-lg font-extrabold tracking-tight text-sky-900"
+                            >MeuLaudo</span
+                        ><span class="hidden text-xs font-medium text-slate-500 sm:block"
+                            >Portal da Clínica</span
+                        ></span
+                    >
+                </a>
+
+                <nav class="hidden items-center gap-2 md:flex" aria-label="Navegação do portal">
+                    <a
+                        href="listagem.html"
+                        class="rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-100 hover:text-sky-900"
+                        >Exames enviados</a
+                    >
+                    <a
+                        href="upload.html"
+                        class="rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-100 hover:text-sky-900"
+                        >Novo exame</a
+                    >
+                    <a
+                        href="usuarios.html"
+                        aria-current="page"
+                        class="rounded-xl bg-sky-50 px-4 py-2.5 text-sm font-bold text-sky-900"
+                        >Usuários</a
+                    >
+                </nav>
+
+                <div class="flex items-center gap-3">
+                    <div class="hidden text-right sm:block">
+                        <p id="header-name" class="text-sm font-bold text-slate-800">
+                            Mariana Costa
+                        </p>
+                        <p id="header-role" class="text-xs text-slate-500">Administradora</p>
+                    </div>
+                    <button
+                        id="user-menu-button"
+                        type="button"
+                        aria-label="Abrir opções do usuário"
+                        class="grid size-10 place-items-center rounded-full bg-sky-100 text-sm font-extrabold text-sky-900 focus-visible:ring-2 focus-visible:ring-sky-900 focus-visible:ring-offset-2"
+                    >
+                        MC
+                    </button>
+                    <button
+                        id="logout-button"
+                        type="button"
+                        title="Sair"
+                        aria-label="Sair do portal"
+                        class="hidden size-10 place-items-center rounded-xl text-slate-500 transition hover:bg-slate-100 hover:text-rose-600 sm:grid"
+                    >
+                        <svg viewBox="0 0 24 24" class="size-5" fill="none" aria-hidden="true">
+                            <path
+                                d="M10 5H5v14h5m4-3 4-4-4-4m4 4H9"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <nav class="border-t border-slate-200 px-4 py-2 md:hidden" aria-label="Navegação móvel">
+                <div class="mx-auto flex max-w-7xl gap-1 overflow-x-auto">
+                    <a
+                        href="listagem.html"
+                        class="shrink-0 rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-600"
+                        >Exames</a
+                    ><a
+                        href="upload.html"
+                        class="shrink-0 rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-600"
+                        >Novo exame</a
+                    ><a
+                        href="usuarios.html"
+                        aria-current="page"
+                        class="shrink-0 rounded-xl bg-sky-50 px-3 py-2.5 text-sm font-bold text-sky-900"
+                        >Usuários</a
+                    ><button
+                        id="logout-mobile"
+                        type="button"
+                        class="ml-auto shrink-0 rounded-xl px-3 py-2.5 text-sm font-bold text-rose-600"
+                    >
+                        Sair
+                    </button>
+                </div>
+            </nav>
+        </header>
+
+        <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
+            <div class="flex flex-col justify-between gap-5 md:flex-row md:items-end">
+                <div>
+                    <div class="flex items-center gap-3">
+                        <p class="text-sm font-bold uppercase tracking-[.14em] text-sky-700">
+                            Controle de acesso
+                        </p>
+                        <span
+                            class="rounded-full bg-amber-100 px-2.5 py-1 text-[11px] font-bold uppercase tracking-[.08em] text-amber-700"
+                            >Somente administradores</span
+                        >
+                    </div>
+                    <h1 class="mt-3 text-3xl font-extrabold tracking-tight text-sky-900">
+                        Gerenciamento de usuários
+                    </h1>
+                    <p class="mt-3 max-w-2xl text-sm leading-6 text-slate-500">
+                        Controle quais profissionais podem enviar exames, consultar registros e
+                        administrar o portal.
+                    </p>
+                </div>
+                <button
+                    id="new-user-button"
+                    type="button"
+                    class="inline-flex items-center justify-center gap-2 rounded-xl bg-sky-900 px-5 py-3 text-sm font-bold text-white shadow-sm transition hover:bg-sky-800 focus-visible:ring-2 focus-visible:ring-sky-900 focus-visible:ring-offset-2"
+                >
+                    <svg viewBox="0 0 24 24" class="size-4" fill="none" aria-hidden="true">
+                        <path
+                            d="M12 5v14M5 12h14"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                        /></svg
+                    >Novo usuário
+                </button>
+            </div>
+
+            <section
+                class="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4"
+                aria-label="Resumo dos usuários"
+            >
+                <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                    <div class="flex items-center justify-between">
+                        <p class="text-xs font-bold uppercase tracking-[.12em] text-slate-500">
+                            Total
+                        </p>
+                        <span
+                            class="grid size-9 place-items-center rounded-xl bg-slate-100 text-slate-600"
+                            ><svg viewBox="0 0 24 24" class="size-5" fill="none" aria-hidden="true">
+                                <path
+                                    d="M8.5 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm7-1a3 3 0 1 0 0-6m-12 16c.5-4 2.3-6 5-6s4.5 2 5 6m1-5c2.7 0 4.5 1.7 5 5"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linecap="round"
+                                /></svg
+                        ></span>
+                    </div>
+                    <p id="count-total" class="mt-3 text-3xl font-extrabold text-sky-900">0</p>
+                </article>
+                <article class="rounded-2xl border border-sky-200 bg-sky-50 p-5 shadow-sm">
+                    <p class="text-xs font-bold uppercase tracking-[.12em] text-sky-700">
+                        Administradores
+                    </p>
+                    <p id="count-admin" class="mt-3 text-3xl font-extrabold text-sky-900">0</p>
+                </article>
+                <article class="rounded-2xl border border-emerald-200 bg-emerald-50 p-5 shadow-sm">
+                    <p class="text-xs font-bold uppercase tracking-[.12em] text-emerald-700">
+                        Usuários ativos
+                    </p>
+                    <p id="count-active" class="mt-3 text-3xl font-extrabold text-emerald-700">0</p>
+                </article>
+                <article class="rounded-2xl border border-rose-200 bg-rose-50 p-5 shadow-sm">
+                    <p class="text-xs font-bold uppercase tracking-[.12em] text-rose-700">
+                        Usuários inativos
+                    </p>
+                    <p id="count-inactive" class="mt-3 text-3xl font-extrabold text-rose-700">0</p>
+                </article>
+            </section>
+
+            <section
+                class="mt-6 rounded-3xl border border-slate-200 bg-white shadow-sm"
+                aria-labelledby="users-title"
+            >
+                <div class="border-b border-slate-200 p-5 sm:p-6">
+                    <div class="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
+                        <div>
+                            <h2 id="users-title" class="text-xl font-bold text-slate-900">
+                                Equipe da clínica
+                            </h2>
+                            <p id="results-count" class="mt-1 text-sm text-slate-500"></p>
+                        </div>
+                        <div class="grid gap-3 sm:grid-cols-[minmax(240px,1fr)_180px_180px_auto]">
+                            <div class="relative">
+                                <span
+                                    class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400"
+                                    ><svg
+                                        viewBox="0 0 24 24"
+                                        class="size-5"
+                                        fill="none"
+                                        aria-hidden="true"
+                                    >
+                                        <circle
+                                            cx="11"
+                                            cy="11"
+                                            r="6"
+                                            stroke="currentColor"
+                                            stroke-width="1.8"
+                                        />
+                                        <path
+                                            d="m16 16 4 4"
+                                            stroke="currentColor"
+                                            stroke-width="1.8"
+                                            stroke-linecap="round"
+                                        /></svg></span
+                                ><input
+                                    id="search-input"
+                                    type="search"
+                                    placeholder="Nome ou e-mail"
+                                    class="w-full rounded-xl border border-slate-300 bg-white py-3 pl-12 pr-4 text-sm text-slate-900 placeholder:text-slate-400 focus:border-sky-900 focus:ring-2 focus:ring-sky-900/20"
+                                />
+                            </div>
+                            <select
+                                id="role-filter"
+                                class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-semibold text-slate-700 focus:border-sky-900 focus:ring-2 focus:ring-sky-900/20"
+                            >
+                                <option value="todos">Todos os perfis</option>
+                                <option value="ADMINISTRADOR">Administrador</option>
+                                <option value="OPERADOR">Operador</option>
+                            </select>
+                            <select
+                                id="status-filter"
+                                class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-semibold text-slate-700 focus:border-sky-900 focus:ring-2 focus:ring-sky-900/20"
+                            >
+                                <option value="todos">Todos os status</option>
+                                <option value="ATIVO">Ativo</option>
+                                <option value="INATIVO">Inativo</option>
+                            </select>
+                            <button
+                                id="clear-filters"
+                                type="button"
+                                class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-bold text-slate-700 hover:border-sky-700 hover:text-sky-900"
+                            >
+                                Limpar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="table-wrapper" class="overflow-x-auto">
+                    <table class="w-full min-w-[980px] border-collapse text-left">
+                        <thead
+                            class="bg-slate-50 text-xs font-bold uppercase tracking-[.1em] text-slate-500"
+                        >
+                            <tr>
+                                <th class="px-6 py-4">Usuário</th>
+                                <th class="px-6 py-4">Perfil</th>
+                                <th class="px-6 py-4">Status</th>
+                                <th class="px-6 py-4">Último acesso</th>
+                                <th class="px-6 py-4">Criado em</th>
+                                <th class="px-6 py-4 text-right">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="users-body" class="divide-y divide-slate-200"></tbody>
+                    </table>
+                </div>
+
+                <div id="empty-state" class="hidden px-6 py-16 text-center">
+                    <span
+                        class="mx-auto grid size-16 place-items-center rounded-3xl bg-slate-100 text-slate-400"
+                        ><svg viewBox="0 0 24 24" class="size-8" fill="none" aria-hidden="true">
+                            <path
+                                d="M8.5 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm7-1a3 3 0 1 0 0-6m-12 10c.5-4 2.3-6 5-6s4.5 2 5 6m1-5c2.7 0 4.5 1.7 5 5"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linecap="round"
+                            /></svg
+                    ></span>
+                    <h3 class="mt-5 text-lg font-bold text-slate-900">Nenhum usuário encontrado</h3>
+                    <p class="mt-2 text-sm text-slate-500">
+                        Ajuste os filtros ou cadastre um novo usuário.
+                    </p>
+                </div>
+            </section>
+        </main>
+
+        <div
+            id="toast"
+            role="status"
+            aria-live="polite"
+            class="fixed bottom-5 right-5 z-[70] hidden max-w-sm rounded-2xl border border-emerald-200 bg-white p-4 shadow-xl"
+        >
+            <div class="flex items-center gap-3">
+                <span
+                    class="grid size-8 place-items-center rounded-xl bg-emerald-100 text-emerald-600"
+                    ><svg viewBox="0 0 24 24" class="size-5" fill="none" aria-hidden="true">
+                        <path
+                            d="m5 12 4 4L19 6"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        /></svg
+                ></span>
+                <p id="toast-text" class="text-sm font-bold text-slate-900"></p>
+            </div>
+        </div>
+
+        <div
+            id="user-modal"
+            class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 p-4"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-title"
+        >
+            <div
+                class="max-h-[92vh] w-full max-w-xl overflow-y-auto rounded-3xl bg-white p-6 shadow-2xl sm:p-8"
+            >
+                <div class="flex items-start justify-between gap-4">
+                    <div>
+                        <p
+                            id="modal-eyebrow"
+                            class="text-xs font-bold uppercase tracking-[.14em] text-sky-700"
+                        >
+                            Novo acesso
+                        </p>
+                        <h2 id="modal-title" class="mt-2 text-xl font-bold text-slate-900">
+                            Cadastrar usuário
+                        </h2>
+                    </div>
+                    <button
+                        id="close-modal"
+                        type="button"
+                        aria-label="Fechar"
+                        class="grid size-9 place-items-center rounded-xl text-slate-500 hover:bg-slate-100"
+                    >
+                        <svg viewBox="0 0 24 24" class="size-5" fill="none" aria-hidden="true">
+                            <path
+                                d="m7 7 10 10M17 7 7 17"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                            />
+                        </svg>
+                    </button>
+                </div>
+                <form id="user-form" class="mt-6 space-y-5" novalidate>
+                    <input id="user-id" type="hidden" />
+                    <div>
+                        <label for="user-name" class="mb-2 block text-sm font-bold text-slate-700"
+                            >Nome completo *</label
+                        ><input
+                            id="user-name"
+                            type="text"
+                            placeholder="Ex.: Ana Souza"
+                            class="field w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-sky-900 focus:ring-2 focus:ring-sky-900/20"
+                        />
+                        <p class="field-error mt-2 hidden text-xs font-semibold text-rose-600">
+                            Informe o nome completo.
+                        </p>
+                    </div>
+                    <div>
+                        <label for="user-email" class="mb-2 block text-sm font-bold text-slate-700"
+                            >E-mail corporativo *</label
+                        ><input
+                            id="user-email"
+                            type="email"
+                            placeholder="nome@clinica.com.br"
+                            class="field w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-sky-900 focus:ring-2 focus:ring-sky-900/20"
+                        />
+                        <p class="field-error mt-2 hidden text-xs font-semibold text-rose-600">
+                            Informe um e-mail válido e não utilizado.
+                        </p>
+                    </div>
+                    <div class="grid gap-5 sm:grid-cols-2">
+                        <div>
+                            <label
+                                for="user-role"
+                                class="mb-2 block text-sm font-bold text-slate-700"
+                                >Perfil *</label
+                            ><select
+                                id="user-role"
+                                class="field w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 focus:border-sky-900 focus:ring-2 focus:ring-sky-900/20"
+                            >
+                                <option value="OPERADOR">Operador</option>
+                                <option value="ADMINISTRADOR">Administrador</option>
+                            </select>
+                            <p class="mt-2 text-xs text-slate-500">
+                                Administradores gerenciam usuários.
+                            </p>
+                        </div>
+                        <div>
+                            <label
+                                for="user-status"
+                                class="mb-2 block text-sm font-bold text-slate-700"
+                                >Status *</label
+                            ><select
+                                id="user-status"
+                                class="field w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 focus:border-sky-900 focus:ring-2 focus:ring-sky-900/20"
+                            >
+                                <option value="ATIVO">Ativo</option>
+                                <option value="INATIVO">Inativo</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="password-field">
+                        <label
+                            for="user-password"
+                            class="mb-2 block text-sm font-bold text-slate-700"
+                            >Senha temporária *</label
+                        >
+                        <div class="relative">
+                            <input
+                                id="user-password"
+                                type="password"
+                                placeholder="Mínimo de 6 caracteres"
+                                class="field w-full rounded-xl border border-slate-300 bg-white px-4 py-3 pr-12 text-sm text-slate-900 placeholder:text-slate-400 focus:border-sky-900 focus:ring-2 focus:ring-sky-900/20"
+                            /><button
+                                id="toggle-user-password"
+                                type="button"
+                                aria-label="Mostrar senha"
+                                class="absolute inset-y-0 right-0 grid w-12 place-items-center text-slate-400 hover:text-sky-900"
+                            >
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    class="size-5"
+                                    fill="none"
+                                    aria-hidden="true"
+                                >
+                                    <path
+                                        d="M3 12s3.2-5 9-5 9 5 9 5-3.2 5-9 5-9-5-9-5Z"
+                                        stroke="currentColor"
+                                        stroke-width="1.7"
+                                    />
+                                    <circle
+                                        cx="12"
+                                        cy="12"
+                                        r="2.5"
+                                        stroke="currentColor"
+                                        stroke-width="1.7"
+                                    />
+                                </svg>
+                            </button>
+                        </div>
+                        <p class="field-error mt-2 hidden text-xs font-semibold text-rose-600">
+                            Informe uma senha com pelo menos 6 caracteres.
+                        </p>
+                    </div>
+                    <div
+                        class="rounded-2xl border border-sky-200 bg-sky-50 p-4 text-sm leading-6 text-sky-800"
+                    >
+                        <strong>Permissões:</strong> operadores podem enviar e consultar exames.
+                        Administradores também podem gerenciar os usuários da clínica.
+                    </div>
+                    <div
+                        class="flex flex-col-reverse gap-3 border-t border-slate-200 pt-5 sm:flex-row sm:justify-end"
+                    >
+                        <button
+                            id="cancel-modal"
+                            type="button"
+                            class="rounded-xl border border-slate-300 px-5 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50"
+                        >
+                            Cancelar</button
+                        ><button
+                            type="submit"
+                            class="rounded-xl bg-sky-900 px-5 py-3 text-sm font-bold text-white hover:bg-sky-800"
+                        >
+                            <span id="save-label">Cadastrar usuário</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div
+            id="delete-modal"
+            class="fixed inset-0 z-[60] hidden items-center justify-center bg-slate-950/60 p-4"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="delete-title"
+        >
+            <div class="w-full max-w-md rounded-3xl bg-white p-6 shadow-2xl sm:p-8">
+                <span class="grid size-12 place-items-center rounded-2xl bg-rose-100 text-rose-600"
+                    ><svg viewBox="0 0 24 24" class="size-6" fill="none" aria-hidden="true">
+                        <path
+                            d="M5 7h14M9 7V4h6v3m2 0-1 13H8L7 7m3 4v5m4-5v5"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        /></svg
+                ></span>
+                <h2 id="delete-title" class="mt-5 text-xl font-bold text-slate-900">
+                    Excluir usuário?
+                </h2>
+                <p class="mt-3 text-sm leading-6 text-slate-500">
+                    O acesso de <strong id="delete-user-name" class="text-slate-700"></strong> será
+                    removido. Esta ação não altera os exames já enviados.
+                </p>
+                <div class="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+                    <button
+                        id="cancel-delete"
+                        type="button"
+                        class="rounded-xl border border-slate-300 px-5 py-3 text-sm font-bold text-slate-700"
+                    >
+                        Cancelar</button
+                    ><button
+                        id="confirm-delete"
+                        type="button"
+                        class="rounded-xl bg-rose-600 px-5 py-3 text-sm font-bold text-white hover:bg-rose-700"
+                    >
+                        Excluir usuário
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            const storageKey = 'meulaudoUsers';
+            const defaultUsers = [
+                {
+                    id: 1,
+                    name: 'Mariana Costa',
+                    email: 'admin@meulaudo.com.br',
+                    role: 'ADMINISTRADOR',
+                    status: 'ATIVO',
+                    lastAccess: 'Hoje, 09:42',
+                    createdAt: '12/05/2026',
+                },
+                {
+                    id: 2,
+                    name: 'Carlos Lima',
+                    email: 'operador@meulaudo.com.br',
+                    role: 'OPERADOR',
+                    status: 'ATIVO',
+                    lastAccess: 'Hoje, 08:17',
+                    createdAt: '18/05/2026',
+                },
+                {
+                    id: 3,
+                    name: 'Fernanda Alves',
+                    email: 'fernanda@clinicacentral.com.br',
+                    role: 'OPERADOR',
+                    status: 'ATIVO',
+                    lastAccess: 'Ontem, 16:35',
+                    createdAt: '22/05/2026',
+                },
+                {
+                    id: 4,
+                    name: 'Paulo Mendes',
+                    email: 'paulo@clinicacentral.com.br',
+                    role: 'OPERADOR',
+                    status: 'INATIVO',
+                    lastAccess: '21/06/2026, 11:20',
+                    createdAt: '03/06/2026',
+                },
+            ];
+            let users = JSON.parse(localStorage.getItem(storageKey) || 'null') || defaultUsers;
+            let deleteId = null;
+
+            const persist = () => localStorage.setItem(storageKey, JSON.stringify(users));
+            const initials = (name) =>
+                name
+                    .split(' ')
+                    .filter(Boolean)
+                    .slice(0, 2)
+                    .map((part) => part[0])
+                    .join('')
+                    .toUpperCase();
+            const normalize = (value) =>
+                value
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .toLowerCase();
+            const escapeHtml = (value) =>
+                String(value).replace(
+                    /[&<>"']/g,
+                    (character) =>
+                        ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' })[
+                            character
+                        ]
+                );
+            const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+            const roleLabel = (role) => (role === 'ADMINISTRADOR' ? 'Administrador' : 'Operador');
+            const statusLabel = (status) => (status === 'ATIVO' ? 'Ativo' : 'Inativo');
+            const getSession = () =>
+                JSON.parse(
+                    sessionStorage.getItem('meulaudoClinicSession') ||
+                        localStorage.getItem('meulaudoClinicSession') ||
+                        'null'
+                );
+            const session = getSession();
+            if (session) {
+                document.querySelector('#header-name').textContent = session.name;
+                document.querySelector('#header-role').textContent =
+                    session.role === 'ADMINISTRADOR' ? 'Administradora' : 'Operador';
+                document.querySelector('#user-menu-button').textContent = initials(session.name);
+            }
+
+            const showToast = (message) => {
+                const toast = document.querySelector('#toast');
+                document.querySelector('#toast-text').textContent = message;
+                toast.classList.remove('hidden');
+                clearTimeout(showToast.timer);
+                showToast.timer = setTimeout(() => toast.classList.add('hidden'), 2600);
+            };
+
+            const getFilteredUsers = () => {
+                const query = normalize(document.querySelector('#search-input').value.trim());
+                const role = document.querySelector('#role-filter').value;
+                const status = document.querySelector('#status-filter').value;
+                return users.filter(
+                    (user) =>
+                        (!query || normalize(`${user.name} ${user.email}`).includes(query)) &&
+                        (role === 'todos' || user.role === role) &&
+                        (status === 'todos' || user.status === status)
+                );
+            };
+
+            const render = () => {
+                const filtered = getFilteredUsers();
+                const body = document.querySelector('#users-body');
+                body.innerHTML = filtered
+                    .map(
+                        (user) => `
+        <tr class="transition hover:bg-slate-50/80">
+          <td class="px-6 py-4"><div class="flex items-center gap-3"><span class="grid size-10 shrink-0 place-items-center rounded-full bg-sky-100 text-xs font-extrabold text-sky-900">${escapeHtml(initials(user.name))}</span><div><p class="font-bold text-slate-900">${escapeHtml(user.name)}</p><p class="mt-1 text-xs text-slate-500">${escapeHtml(user.email)}</p></div></div></td>
+          <td class="px-6 py-4"><span class="inline-flex rounded-full ${user.role === 'ADMINISTRADOR' ? 'bg-sky-100 text-sky-800' : 'bg-slate-100 text-slate-700'} px-3 py-1.5 text-xs font-bold">${roleLabel(user.role)}</span></td>
+          <td class="px-6 py-4"><span class="inline-flex items-center gap-2 rounded-full ${user.status === 'ATIVO' ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700'} px-3 py-1.5 text-xs font-bold"><span class="size-1.5 rounded-full ${user.status === 'ATIVO' ? 'bg-emerald-600' : 'bg-rose-600'}"></span>${statusLabel(user.status)}</span></td>
+          <td class="px-6 py-4 text-sm text-slate-600">${escapeHtml(user.lastAccess)}</td>
+          <td class="px-6 py-4 text-sm text-slate-600">${escapeHtml(user.createdAt)}</td>
+          <td class="px-6 py-4"><div class="flex justify-end gap-2"><button type="button" data-action="edit" data-id="${user.id}" class="rounded-xl border border-slate-300 px-3 py-2 text-xs font-bold text-slate-700 hover:border-sky-700 hover:text-sky-900">Editar</button><button type="button" data-action="toggle" data-id="${user.id}" class="rounded-xl border border-slate-300 px-3 py-2 text-xs font-bold ${user.status === 'ATIVO' ? 'text-amber-700 hover:border-amber-400' : 'text-emerald-700 hover:border-emerald-400'}">${user.status === 'ATIVO' ? 'Desativar' : 'Ativar'}</button><button type="button" data-action="delete" data-id="${user.id}" class="grid size-9 place-items-center rounded-xl text-rose-600 hover:bg-rose-50" aria-label="Excluir ${escapeHtml(user.name)}"><svg viewBox="0 0 24 24" class="size-4" fill="none" aria-hidden="true"><path d="M5 7h14M9 7V4h6v3m2 0-1 13H8L7 7m3 4v5m4-5v5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></td>
+        </tr>`
+                    )
+                    .join('');
+                document
+                    .querySelector('#table-wrapper')
+                    .classList.toggle('hidden', filtered.length === 0);
+                document
+                    .querySelector('#empty-state')
+                    .classList.toggle('hidden', filtered.length !== 0);
+                document.querySelector('#results-count').textContent =
+                    `${filtered.length} ${filtered.length === 1 ? 'usuário encontrado' : 'usuários encontrados'}`;
+                document.querySelector('#count-total').textContent = users.length;
+                document.querySelector('#count-admin').textContent = users.filter(
+                    (user) => user.role === 'ADMINISTRADOR'
+                ).length;
+                document.querySelector('#count-active').textContent = users.filter(
+                    (user) => user.status === 'ATIVO'
+                ).length;
+                document.querySelector('#count-inactive').textContent = users.filter(
+                    (user) => user.status === 'INATIVO'
+                ).length;
+            };
+
+            const modal = document.querySelector('#user-modal');
+            const openModal = (user = null) => {
+                document.querySelector('#user-form').reset();
+                document.querySelectorAll('.field').forEach((field) => {
+                    field.classList.remove('border-rose-600', 'bg-rose-50/50');
+                    field.classList.add('border-slate-300');
+                    field.setAttribute('aria-invalid', 'false');
+                });
+                document
+                    .querySelectorAll('.field-error')
+                    .forEach((error) => error.classList.add('hidden'));
+                document.querySelector('#user-id').value = user?.id || '';
+                document.querySelector('#user-name').value = user?.name || '';
+                document.querySelector('#user-email').value = user?.email || '';
+                document.querySelector('#user-role').value = user?.role || 'OPERADOR';
+                document.querySelector('#user-status').value = user?.status || 'ATIVO';
+                document.querySelector('#password-field').classList.toggle('hidden', Boolean(user));
+                document.querySelector('#modal-eyebrow').textContent = user
+                    ? 'Editar acesso'
+                    : 'Novo acesso';
+                document.querySelector('#modal-title').textContent = user
+                    ? 'Editar usuário'
+                    : 'Cadastrar usuário';
+                document.querySelector('#save-label').textContent = user
+                    ? 'Salvar alterações'
+                    : 'Cadastrar usuário';
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                setTimeout(() => document.querySelector('#user-name').focus(), 50);
+            };
+            const closeModal = () => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            };
+            const setError = (input, hasError) => {
+                input.classList.toggle('border-rose-600', hasError);
+                input.classList.toggle('bg-rose-50/50', hasError);
+                input.classList.toggle('border-slate-300', !hasError);
+                input.setAttribute('aria-invalid', String(hasError));
+                const container =
+                    input.id === 'user-password'
+                        ? document.querySelector('#password-field')
+                        : input.parentElement;
+                container.querySelector('.field-error')?.classList.toggle('hidden', !hasError);
+            };
+
+            document.querySelector('#new-user-button').addEventListener('click', () => openModal());
+            document.querySelector('#close-modal').addEventListener('click', closeModal);
+            document.querySelector('#cancel-modal').addEventListener('click', closeModal);
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) closeModal();
+            });
+            document.querySelector('#toggle-user-password').addEventListener('click', () => {
+                const field = document.querySelector('#user-password');
+                field.type = field.type === 'password' ? 'text' : 'password';
+            });
+
+            document.querySelector('#user-form').addEventListener('submit', (event) => {
+                event.preventDefault();
+                const id = Number(document.querySelector('#user-id').value) || null;
+                const nameInput = document.querySelector('#user-name');
+                const emailInput = document.querySelector('#user-email');
+                const passwordInput = document.querySelector('#user-password');
+                const emailValue = emailInput.value.trim().toLowerCase();
+                const duplicateEmail = users.some(
+                    (user) => user.email.toLowerCase() === emailValue && user.id !== id
+                );
+                const invalidName = nameInput.value.trim().length < 3;
+                const invalidEmail = !isValidEmail(emailValue) || duplicateEmail;
+                const invalidPassword = !id && passwordInput.value.length < 6;
+                setError(nameInput, invalidName);
+                setError(emailInput, invalidEmail);
+                setError(passwordInput, invalidPassword);
+                if (invalidName || invalidEmail || invalidPassword)
+                    return (
+                        invalidName ? nameInput : invalidEmail ? emailInput : passwordInput
+                    ).focus();
+
+                if (id) {
+                    users = users.map((user) =>
+                        user.id === id
+                            ? {
+                                  ...user,
+                                  name: nameInput.value.trim(),
+                                  email: emailValue,
+                                  role: document.querySelector('#user-role').value,
+                                  status: document.querySelector('#user-status').value,
+                              }
+                            : user
+                    );
+                    showToast('Usuário atualizado com sucesso.');
+                } else {
+                    users.unshift({
+                        id: Date.now(),
+                        name: nameInput.value.trim(),
+                        email: emailValue,
+                        role: document.querySelector('#user-role').value,
+                        status: document.querySelector('#user-status').value,
+                        lastAccess: 'Nunca acessou',
+                        createdAt: new Intl.DateTimeFormat('pt-BR').format(new Date()),
+                    });
+                    showToast('Usuário cadastrado com sucesso.');
+                }
+                persist();
+                closeModal();
+                render();
+            });
+
+            document.querySelector('#users-body').addEventListener('click', (event) => {
+                const button = event.target.closest('button[data-action]');
+                if (!button) return;
+                const id = Number(button.dataset.id);
+                const user = users.find((item) => item.id === id);
+                if (!user) return;
+                if (button.dataset.action === 'edit') openModal(user);
+                if (button.dataset.action === 'toggle') {
+                    users = users.map((item) =>
+                        item.id === id
+                            ? { ...item, status: item.status === 'ATIVO' ? 'INATIVO' : 'ATIVO' }
+                            : item
+                    );
+                    persist();
+                    render();
+                    showToast(
+                        `Usuário ${user.status === 'ATIVO' ? 'desativado' : 'ativado'} com sucesso.`
+                    );
+                }
+                if (button.dataset.action === 'delete') {
+                    deleteId = id;
+                    document.querySelector('#delete-user-name').textContent = user.name;
+                    const deleteModal = document.querySelector('#delete-modal');
+                    deleteModal.classList.remove('hidden');
+                    deleteModal.classList.add('flex');
+                }
+            });
+
+            const closeDelete = () => {
+                const deleteModal = document.querySelector('#delete-modal');
+                deleteModal.classList.add('hidden');
+                deleteModal.classList.remove('flex');
+                deleteId = null;
+            };
+            document.querySelector('#cancel-delete').addEventListener('click', closeDelete);
+            document.querySelector('#confirm-delete').addEventListener('click', () => {
+                users = users.filter((user) => user.id !== deleteId);
+                persist();
+                closeDelete();
+                render();
+                showToast('Usuário excluído com sucesso.');
+            });
+            document.querySelector('#delete-modal').addEventListener('click', (event) => {
+                if (event.target === document.querySelector('#delete-modal')) closeDelete();
+            });
+
+            ['#search-input', '#role-filter', '#status-filter'].forEach((selector) =>
+                document
+                    .querySelector(selector)
+                    .addEventListener(selector === '#search-input' ? 'input' : 'change', render)
+            );
+            document.querySelector('#clear-filters').addEventListener('click', () => {
+                document.querySelector('#search-input').value = '';
+                document.querySelector('#role-filter').value = 'todos';
+                document.querySelector('#status-filter').value = 'todos';
+                render();
+            });
+
+            const logout = () => {
+                sessionStorage.removeItem('meulaudoClinicSession');
+                localStorage.removeItem('meulaudoClinicSession');
+                window.location.href = 'auth.html';
+            };
+            document.querySelector('#logout-button').addEventListener('click', logout);
+            document.querySelector('#logout-mobile').addEventListener('click', logout);
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') {
+                    if (!modal.classList.contains('hidden')) closeModal();
+                    if (!document.querySelector('#delete-modal').classList.contains('hidden'))
+                        closeDelete();
+                }
+            });
+
+            render();
+        </script>
+    </body>
+</html>

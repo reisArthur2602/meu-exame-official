@@ -1,0 +1,698 @@
+<!doctype html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            name="description"
+            content="Envio de um exame sem cadastro prévio de paciente na plataforma MeuLaudo."
+        />
+        <title>MeuLaudo — Enviar Exame</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+            rel="stylesheet"
+        />
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+        <style type="text/tailwindcss">
+            @theme {
+                --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+            }
+            @layer base {
+                * {
+                    @apply box-border;
+                }
+                body {
+                    @apply min-h-screen bg-slate-50 font-sans text-slate-700 antialiased;
+                }
+                button,
+                a,
+                input,
+                select {
+                    @apply outline-none;
+                }
+            }
+            @media (prefers-reduced-motion: reduce) {
+                *,
+                *::before,
+                *::after {
+                    animation-duration: 0.01ms !important;
+                    transition-duration: 0.01ms !important;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <header class="sticky top-0 z-30 border-b border-slate-200 bg-white">
+            <div
+                class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8"
+            >
+                <a
+                    href="listagem.html"
+                    class="inline-flex items-center gap-3 rounded-xl focus-visible:ring-2 focus-visible:ring-sky-900 focus-visible:ring-offset-2"
+                >
+                    <span
+                        class="relative grid size-11 place-items-center overflow-hidden rounded-2xl bg-sky-900 text-white shadow-sm"
+                    >
+                        <svg viewBox="0 0 24 24" class="size-6" fill="none" aria-hidden="true">
+                            <path
+                                d="M7 3.75h7.25L18 7.5v12.75H7V3.75Z"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linejoin="round"
+                            />
+                            <path
+                                d="M14 3.75V7.5h4"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linejoin="round"
+                            />
+                            <path
+                                d="M9.25 13h1.5l1-2.25 1.5 4 1-2h1.5"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                        </svg>
+                        <span class="absolute inset-x-0 bottom-0 h-1 bg-sky-400"></span>
+                    </span>
+                    <span
+                        ><span class="block text-lg font-extrabold tracking-tight text-sky-900"
+                            >MeuLaudo</span
+                        ><span class="hidden text-xs font-medium text-slate-500 sm:block"
+                            >Portal da Clínica</span
+                        ></span
+                    >
+                </a>
+
+                <nav class="hidden items-center gap-2 md:flex" aria-label="Navegação do portal">
+                    <a
+                        href="listagem.html"
+                        class="rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-100 hover:text-sky-900"
+                        >Exames enviados</a
+                    >
+                    <a
+                        href="upload.html"
+                        aria-current="page"
+                        class="rounded-xl bg-sky-50 px-4 py-2.5 text-sm font-bold text-sky-900"
+                        >Novo exame</a
+                    >
+                    <a
+                        href="usuarios.html"
+                        class="rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-100 hover:text-sky-900"
+                        >Usuários</a
+                    >
+                </nav>
+
+                <div class="flex items-center gap-3">
+                    <div class="hidden text-right sm:block">
+                        <p class="text-sm font-bold text-slate-800">Clínica Central</p>
+                        <p class="text-xs text-slate-500">Operador: Mariana</p>
+                    </div>
+                    <span
+                        class="grid size-10 place-items-center rounded-full bg-sky-100 text-sm font-extrabold text-sky-900"
+                        >MC</span
+                    >
+                    <a
+                        href="auth.html"
+                        onclick="
+                            sessionStorage.removeItem('meulaudoClinicSession');
+                            localStorage.removeItem('meulaudoClinicSession');
+                        "
+                        title="Sair"
+                        aria-label="Sair do portal"
+                        class="hidden size-10 place-items-center rounded-xl text-slate-500 transition hover:bg-slate-100 hover:text-rose-600 sm:grid"
+                        ><svg viewBox="0 0 24 24" class="size-5" fill="none" aria-hidden="true">
+                            <path
+                                d="M10 5H5v14h5m4-3 4-4-4-4m4 4H9"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            /></svg
+                    ></a>
+                </div>
+            </div>
+            <nav class="border-t border-slate-200 px-4 py-2 md:hidden" aria-label="Navegação móvel">
+                <div class="mx-auto flex max-w-7xl gap-1 overflow-x-auto">
+                    <a
+                        href="listagem.html"
+                        class="shrink-0 rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-600"
+                        >Exames</a
+                    ><a
+                        href="upload.html"
+                        aria-current="page"
+                        class="shrink-0 rounded-xl bg-sky-50 px-3 py-2.5 text-sm font-bold text-sky-900"
+                        >Novo exame</a
+                    ><a
+                        href="usuarios.html"
+                        class="shrink-0 rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-600"
+                        >Usuários</a
+                    ><a
+                        href="auth.html"
+                        onclick="
+                            sessionStorage.removeItem('meulaudoClinicSession');
+                            localStorage.removeItem('meulaudoClinicSession');
+                        "
+                        class="ml-auto shrink-0 rounded-xl px-3 py-2.5 text-sm font-bold text-rose-600"
+                        >Sair</a
+                    >
+                </div>
+            </nav>
+        </header>
+
+        <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
+            <div class="mb-8 flex flex-col justify-between gap-5 md:flex-row md:items-end">
+                <div>
+                    <p class="text-sm font-bold uppercase tracking-[0.14em] text-sky-700">
+                        Envio independente
+                    </p>
+                    <h1 class="mt-3 text-3xl font-extrabold tracking-tight text-sky-900">
+                        Cadastrar e enviar exame
+                    </h1>
+                    <p class="mt-3 max-w-2xl text-sm leading-6 text-slate-500">
+                        Não existe cadastro prévio do paciente. Informe os dados necessários para
+                        este exame e anexe o arquivo.
+                    </p>
+                </div>
+                <a
+                    href="listagem.html"
+                    class="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-bold text-slate-700 shadow-sm transition hover:border-sky-700 hover:text-sky-900 focus-visible:ring-2 focus-visible:ring-sky-900 focus-visible:ring-offset-2"
+                    >Ver exames enviados</a
+                >
+            </div>
+
+            <div
+                id="form-alert"
+                role="alert"
+                aria-live="assertive"
+                class="mb-6 hidden rounded-2xl border border-rose-200 bg-rose-50 p-4"
+            >
+                <p class="text-sm font-bold text-rose-900">Revise os campos destacados.</p>
+                <p class="mt-1 text-sm text-rose-700">
+                    Preencha os dados obrigatórios e selecione um arquivo PDF ou DICOM.
+                </p>
+            </div>
+            <div
+                id="success-banner"
+                role="status"
+                aria-live="polite"
+                class="mb-6 hidden rounded-2xl border border-emerald-200 bg-emerald-50 p-4"
+            >
+                <p class="text-sm font-bold text-emerald-900">Exame enviado com sucesso.</p>
+                <p class="mt-1 text-sm text-emerald-700">
+                    O paciente poderá consultá-lo usando o CPF e o protocolo informados.
+                </p>
+            </div>
+
+            <form id="upload-form" class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_340px]" novalidate>
+                <section
+                    class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8"
+                    aria-labelledby="data-title"
+                >
+                    <div class="border-b border-slate-200 pb-6">
+                        <h2 id="data-title" class="text-xl font-bold text-slate-900">
+                            Dados deste exame
+                        </h2>
+                        <p class="mt-2 text-sm text-slate-500">
+                            Cada envio gera um registro próprio, sem criar uma ficha permanente de
+                            paciente.
+                        </p>
+                    </div>
+
+                    <div class="mt-7 grid gap-5 md:grid-cols-2">
+                        <div class="md:col-span-2">
+                            <label
+                                for="patient-name"
+                                class="mb-2 block text-sm font-bold text-slate-700"
+                                >Nome completo do paciente *</label
+                            >
+                            <input
+                                id="patient-name"
+                                name="patientName"
+                                type="text"
+                                autocomplete="name"
+                                placeholder="Ex.: Mariana da Silva"
+                                class="field w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 transition focus:border-sky-900 focus:ring-2 focus:ring-sky-900/20"
+                            />
+                            <p class="field-error mt-2 hidden text-xs font-semibold text-rose-600">
+                                Informe o nome do paciente.
+                            </p>
+                        </div>
+
+                        <div>
+                            <label
+                                for="patient-cpf"
+                                class="mb-2 block text-sm font-bold text-slate-700"
+                                >CPF *</label
+                            >
+                            <input
+                                id="patient-cpf"
+                                name="patientCpf"
+                                type="text"
+                                inputmode="numeric"
+                                maxlength="14"
+                                placeholder="000.000.000-00"
+                                class="field w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 transition focus:border-sky-900 focus:ring-2 focus:ring-sky-900/20"
+                            />
+                            <p class="field-error mt-2 hidden text-xs font-semibold text-rose-600">
+                                Informe um CPF com 11 dígitos.
+                            </p>
+                        </div>
+
+                        <div>
+                            <label
+                                for="protocol"
+                                class="mb-2 block text-sm font-bold text-slate-700"
+                                >Protocolo *</label
+                            >
+                            <input
+                                id="protocol"
+                                name="protocol"
+                                type="text"
+                                autocomplete="off"
+                                placeholder="Ex.: ML-2026-1048"
+                                class="field w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-semibold uppercase tracking-wide text-slate-900 placeholder:normal-case placeholder:tracking-normal placeholder:text-slate-400 transition focus:border-sky-900 focus:ring-2 focus:ring-sky-900/20"
+                            />
+                            <p class="field-error mt-2 hidden text-xs font-semibold text-rose-600">
+                                Informe o protocolo do exame.
+                            </p>
+                        </div>
+
+                        <div>
+                            <label
+                                for="exam-name"
+                                class="mb-2 block text-sm font-bold text-slate-700"
+                                >Nome do exame *</label
+                            >
+                            <input
+                                id="exam-name"
+                                name="examName"
+                                type="text"
+                                placeholder="Ex.: Hemograma completo"
+                                class="field w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 transition focus:border-sky-900 focus:ring-2 focus:ring-sky-900/20"
+                            />
+                            <p class="field-error mt-2 hidden text-xs font-semibold text-rose-600">
+                                Informe o nome do exame.
+                            </p>
+                        </div>
+
+                        <div>
+                            <label
+                                for="exam-date"
+                                class="mb-2 block text-sm font-bold text-slate-700"
+                                >Data de realização *</label
+                            >
+                            <input
+                                id="exam-date"
+                                name="examDate"
+                                type="date"
+                                class="field w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 transition focus:border-sky-900 focus:ring-2 focus:ring-sky-900/20"
+                            />
+                            <p class="field-error mt-2 hidden text-xs font-semibold text-rose-600">
+                                Informe a data de realização.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="mt-7">
+                        <p class="mb-2 text-sm font-bold text-slate-700">Arquivo do exame *</p>
+                        <div
+                            id="drop-zone"
+                            tabindex="0"
+                            role="button"
+                            aria-label="Selecionar arquivo do exame"
+                            class="group flex min-h-64 cursor-pointer flex-col items-center justify-center rounded-3xl border-2 border-dashed border-slate-300 bg-slate-50 px-6 py-10 text-center transition hover:border-sky-700 hover:bg-sky-50/70 focus-visible:ring-2 focus-visible:ring-sky-900 focus-visible:ring-offset-2"
+                        >
+                            <input
+                                id="file-input"
+                                type="file"
+                                class="hidden"
+                                accept=".pdf,.dcm,application/pdf,application/dicom"
+                            />
+                            <span
+                                class="grid size-16 place-items-center rounded-3xl bg-white text-sky-900 shadow-sm transition group-hover:-translate-y-1"
+                            >
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    class="size-8"
+                                    fill="none"
+                                    aria-hidden="true"
+                                >
+                                    <path
+                                        d="M12 16V4m0 0L8 8m4-4 4 4M5 14v5h14v-5"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    />
+                                </svg>
+                            </span>
+                            <p class="mt-5 text-base font-bold text-slate-900">
+                                Arraste e solte o arquivo aqui
+                            </p>
+                            <p class="mt-2 text-sm text-slate-500">ou clique para selecionar</p>
+                            <span
+                                class="mt-4 rounded-full bg-white px-3 py-1.5 text-xs font-bold text-slate-500 shadow-sm"
+                                >PDF ou DICOM · até 100 MB</span
+                            >
+                        </div>
+                        <p id="file-error" class="mt-2 hidden text-xs font-semibold text-rose-600">
+                            Selecione um arquivo PDF ou DICOM.
+                        </p>
+
+                        <div
+                            id="file-preview"
+                            class="mt-4 hidden rounded-2xl border border-slate-200 bg-white p-4"
+                        >
+                            <div class="flex items-center gap-4">
+                                <span
+                                    class="grid size-11 shrink-0 place-items-center rounded-xl bg-sky-50 text-sky-900"
+                                    ><svg
+                                        viewBox="0 0 24 24"
+                                        class="size-5"
+                                        fill="none"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            d="M7 3.75h7.25L18 7.5v12.75H7V3.75Z"
+                                            stroke="currentColor"
+                                            stroke-width="1.7"
+                                            stroke-linejoin="round"
+                                        />
+                                        <path
+                                            d="M14 3.75V7.5h4"
+                                            stroke="currentColor"
+                                            stroke-width="1.7"
+                                            stroke-linejoin="round"
+                                        /></svg
+                                ></span>
+                                <div class="min-w-0 flex-1">
+                                    <p
+                                        id="file-name"
+                                        class="truncate text-sm font-bold text-slate-900"
+                                    ></p>
+                                    <p id="file-size" class="mt-1 text-xs text-slate-500"></p>
+                                </div>
+                                <button
+                                    id="remove-file"
+                                    type="button"
+                                    class="rounded-xl px-3 py-2 text-xs font-bold text-rose-600 hover:bg-rose-50"
+                                >
+                                    Remover
+                                </button>
+                            </div>
+                            <div class="mt-4 h-2 overflow-hidden rounded-full bg-slate-100">
+                                <div
+                                    id="progress-bar"
+                                    class="h-full w-0 rounded-full bg-emerald-600 transition-all duration-700"
+                                ></div>
+                            </div>
+                            <p
+                                id="progress-label"
+                                class="mt-2 text-xs font-semibold text-slate-500"
+                            >
+                                Arquivo pronto para envio
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <aside class="space-y-6">
+                    <section class="rounded-3xl bg-sky-900 p-6 text-white shadow-sm">
+                        <p class="text-xs font-bold uppercase tracking-[0.14em] text-sky-200">
+                            Como o acesso funciona
+                        </p>
+                        <ol class="mt-5 space-y-5 text-sm">
+                            <li class="flex gap-3">
+                                <span
+                                    class="grid size-7 shrink-0 place-items-center rounded-full bg-white/10 font-bold"
+                                    >1</span
+                                ><span>Cadastre os dados somente deste exame.</span>
+                            </li>
+                            <li class="flex gap-3">
+                                <span
+                                    class="grid size-7 shrink-0 place-items-center rounded-full bg-white/10 font-bold"
+                                    >2</span
+                                ><span>Envie o arquivo PDF ou DICOM.</span>
+                            </li>
+                            <li class="flex gap-3">
+                                <span
+                                    class="grid size-7 shrink-0 place-items-center rounded-full bg-white/10 font-bold"
+                                    >3</span
+                                ><span>O paciente consulta com CPF + protocolo.</span>
+                            </li>
+                        </ol>
+                    </section>
+
+                    <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+                        <h2 class="text-base font-bold text-slate-900">Resumo do envio</h2>
+                        <dl class="mt-5 space-y-4 text-sm">
+                            <div class="flex items-center justify-between gap-4">
+                                <dt class="text-slate-500">Paciente</dt>
+                                <dd
+                                    id="summary-name"
+                                    class="max-w-40 truncate font-bold text-slate-800"
+                                >
+                                    Não informado
+                                </dd>
+                            </div>
+                            <div class="flex items-center justify-between gap-4">
+                                <dt class="text-slate-500">CPF</dt>
+                                <dd id="summary-cpf" class="font-bold text-slate-800">
+                                    Não informado
+                                </dd>
+                            </div>
+                            <div class="flex items-center justify-between gap-4">
+                                <dt class="text-slate-500">Protocolo</dt>
+                                <dd id="summary-protocol" class="font-bold text-slate-800">
+                                    Não informado
+                                </dd>
+                            </div>
+                            <div class="flex items-center justify-between gap-4">
+                                <dt class="text-slate-500">Arquivo</dt>
+                                <dd
+                                    id="summary-file"
+                                    class="max-w-40 truncate font-bold text-slate-800"
+                                >
+                                    Não selecionado
+                                </dd>
+                            </div>
+                        </dl>
+                        <button
+                            id="submit-button"
+                            type="submit"
+                            class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-sky-900 px-5 py-3.5 text-sm font-bold text-white shadow-sm transition hover:bg-sky-800 focus-visible:ring-2 focus-visible:ring-sky-900 focus-visible:ring-offset-2 disabled:cursor-wait disabled:opacity-70"
+                        >
+                            <span id="submit-label">Enviar exame</span>
+                            <svg
+                                id="submit-spinner"
+                                viewBox="0 0 24 24"
+                                class="hidden size-5 animate-spin"
+                                fill="none"
+                                aria-hidden="true"
+                            >
+                                <circle
+                                    cx="12"
+                                    cy="12"
+                                    r="9"
+                                    stroke="currentColor"
+                                    stroke-width="3"
+                                    class="opacity-30"
+                                />
+                                <path
+                                    d="M21 12a9 9 0 0 0-9-9"
+                                    stroke="currentColor"
+                                    stroke-width="3"
+                                    stroke-linecap="round"
+                                />
+                            </svg>
+                        </button>
+                    </section>
+                </aside>
+            </form>
+        </main>
+
+        <script>
+            const form = document.querySelector('#upload-form');
+            const fields = {
+                name: document.querySelector('#patient-name'),
+                cpf: document.querySelector('#patient-cpf'),
+                protocol: document.querySelector('#protocol'),
+                exam: document.querySelector('#exam-name'),
+                date: document.querySelector('#exam-date'),
+            };
+            const dropZone = document.querySelector('#drop-zone');
+            const fileInput = document.querySelector('#file-input');
+            const filePreview = document.querySelector('#file-preview');
+            const fileError = document.querySelector('#file-error');
+            let selectedFile = null;
+
+            const formatCpf = (value) =>
+                value
+                    .replace(/\D/g, '')
+                    .slice(0, 11)
+                    .replace(/^(\d{3})(\d)/, '$1.$2')
+                    .replace(/^(\d{3})\.(\d{3})(\d)/, '$1.$2.$3')
+                    .replace(/\.(\d{3})(\d)/, '.$1-$2');
+            const formatBytes = (bytes) =>
+                bytes < 1024 * 1024
+                    ? `${(bytes / 1024).toFixed(1)} KB`
+                    : `${(bytes / 1024 / 1024).toFixed(1)} MB`;
+            const getError = (input) => input.parentElement.querySelector('.field-error');
+            const setError = (input, hasError) => {
+                input.classList.toggle('border-rose-600', hasError);
+                input.classList.toggle('bg-rose-50/50', hasError);
+                input.classList.toggle('border-slate-300', !hasError);
+                input.setAttribute('aria-invalid', String(hasError));
+                getError(input)?.classList.toggle('hidden', !hasError);
+            };
+            const updateSummary = () => {
+                document.querySelector('#summary-name').textContent =
+                    fields.name.value.trim() || 'Não informado';
+                document.querySelector('#summary-cpf').textContent =
+                    fields.cpf.value || 'Não informado';
+                document.querySelector('#summary-protocol').textContent =
+                    fields.protocol.value.trim().toUpperCase() || 'Não informado';
+                document.querySelector('#summary-file').textContent =
+                    selectedFile?.name || 'Não selecionado';
+            };
+            const validateFile = (file) => {
+                const extension = file?.name.split('.').pop()?.toLowerCase();
+                return Boolean(
+                    file && ['pdf', 'dcm'].includes(extension) && file.size <= 100 * 1024 * 1024
+                );
+            };
+            const selectFile = (file) => {
+                if (!validateFile(file)) {
+                    selectedFile = null;
+                    filePreview.classList.add('hidden');
+                    fileError.classList.remove('hidden');
+                    dropZone.classList.add('border-rose-600', 'bg-rose-50');
+                    updateSummary();
+                    return;
+                }
+                selectedFile = file;
+                fileError.classList.add('hidden');
+                dropZone.classList.remove('border-rose-600', 'bg-rose-50');
+                document.querySelector('#file-name').textContent = file.name;
+                document.querySelector('#file-size').textContent = formatBytes(file.size);
+                document.querySelector('#progress-bar').style.width = '0%';
+                document.querySelector('#progress-label').textContent = 'Arquivo pronto para envio';
+                filePreview.classList.remove('hidden');
+                requestAnimationFrame(() => {
+                    document.querySelector('#progress-bar').style.width = '100%';
+                });
+                updateSummary();
+            };
+
+            fields.cpf.addEventListener('input', (event) => {
+                event.target.value = formatCpf(event.target.value);
+                updateSummary();
+                if (event.target.value.replace(/\D/g, '').length === 11)
+                    setError(event.target, false);
+            });
+            fields.protocol.addEventListener('input', (event) => {
+                event.target.value = event.target.value.toUpperCase();
+                updateSummary();
+            });
+            fields.name.addEventListener('input', updateSummary);
+            Object.values(fields).forEach((input) =>
+                input.addEventListener('blur', () => {
+                    const invalid =
+                        input === fields.cpf
+                            ? input.value.replace(/\D/g, '').length !== 11
+                            : !input.value.trim();
+                    setError(input, invalid);
+                })
+            );
+
+            dropZone.addEventListener('click', () => fileInput.click());
+            dropZone.addEventListener('keydown', (event) => {
+                if (['Enter', ' '].includes(event.key)) {
+                    event.preventDefault();
+                    fileInput.click();
+                }
+            });
+            fileInput.addEventListener('change', () => selectFile(fileInput.files[0]));
+            ['dragenter', 'dragover'].forEach((name) =>
+                dropZone.addEventListener(name, (event) => {
+                    event.preventDefault();
+                    dropZone.classList.add('border-sky-700', 'bg-sky-50');
+                })
+            );
+            ['dragleave', 'drop'].forEach((name) =>
+                dropZone.addEventListener(name, (event) => {
+                    event.preventDefault();
+                    dropZone.classList.remove('border-sky-700', 'bg-sky-50');
+                })
+            );
+            dropZone.addEventListener('drop', (event) => selectFile(event.dataTransfer.files[0]));
+            document.querySelector('#remove-file').addEventListener('click', () => {
+                selectedFile = null;
+                fileInput.value = '';
+                filePreview.classList.add('hidden');
+                updateSummary();
+            });
+
+            form.addEventListener('submit', (event) => {
+                event.preventDefault();
+                let valid = true;
+                Object.values(fields).forEach((input) => {
+                    const invalid =
+                        input === fields.cpf
+                            ? input.value.replace(/\D/g, '').length !== 11
+                            : !input.value.trim();
+                    setError(input, invalid);
+                    if (invalid) valid = false;
+                });
+                if (!selectedFile) {
+                    fileError.classList.remove('hidden');
+                    dropZone.classList.add('border-rose-600', 'bg-rose-50');
+                    valid = false;
+                }
+                document.querySelector('#form-alert').classList.toggle('hidden', valid);
+                document.querySelector('#success-banner').classList.add('hidden');
+                if (!valid) {
+                    document.querySelector('[aria-invalid="true"]')?.focus();
+                    return;
+                }
+
+                const button = document.querySelector('#submit-button');
+                button.disabled = true;
+                document.querySelector('#submit-label').textContent = 'Enviando exame';
+                document.querySelector('#submit-spinner').classList.remove('hidden');
+                document.querySelector('#progress-bar').style.width = '35%';
+                document.querySelector('#progress-label').textContent = 'Enviando arquivo...';
+
+                window.setTimeout(() => {
+                    document.querySelector('#progress-bar').style.width = '100%';
+                    document.querySelector('#progress-label').textContent = 'Upload concluído';
+                    const uploads = JSON.parse(localStorage.getItem('meulaudoUploads') || '[]');
+                    uploads.unshift({
+                        id: Date.now(),
+                        name: fields.name.value.trim(),
+                        cpf: fields.cpf.value,
+                        protocol: fields.protocol.value.trim().toUpperCase(),
+                        exam: fields.exam.value.trim(),
+                        examDate: fields.date.value,
+                        uploadDate: new Date().toLocaleDateString('pt-BR'),
+                        status: 'disponivel',
+                        fileName: selectedFile.name,
+                    });
+                    localStorage.setItem('meulaudoUploads', JSON.stringify(uploads));
+                    document.querySelector('#success-banner').classList.remove('hidden');
+                    button.disabled = false;
+                    document.querySelector('#submit-label').textContent = 'Enviar outro exame';
+                    document.querySelector('#submit-spinner').classList.add('hidden');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }, 1000);
+            });
+
+            fields.date.value = new Date().toISOString().split('T')[0];
+            updateSummary();
+        </script>
+    </body>
+</html>

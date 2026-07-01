@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="Listagem de exames enviados na plataforma MeuLaudo." />
+        <title>MeuLaudo — Exames Enviados</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+            rel="stylesheet"
+        />
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+        <style type="text/tailwindcss">
+            @theme {
+                --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+            }
+            @layer base {
+                * {
+                    @apply box-border;
+                }
+                body {
+                    @apply min-h-screen bg-slate-50 font-sans text-slate-700 antialiased;
+                }
+                button,
+                a,
+                input,
+                select {
+                    @apply outline-none;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <header class="sticky top-0 z-30 border-b border-slate-200 bg-white">
+            <div
+                class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8"
+            >
+                <a
+                    href="listagem.html"
+                    class="inline-flex items-center gap-3 rounded-xl focus-visible:ring-2 focus-visible:ring-sky-900 focus-visible:ring-offset-2"
+                >
+                    <span
+                        class="relative grid size-11 place-items-center overflow-hidden rounded-2xl bg-sky-900 text-white shadow-sm"
+                    >
+                        <svg viewBox="0 0 24 24" class="size-6" fill="none" aria-hidden="true">
+                            <path
+                                d="M7 3.75h7.25L18 7.5v12.75H7V3.75Z"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linejoin="round"
+                            />
+                            <path
+                                d="M14 3.75V7.5h4"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linejoin="round"
+                            />
+                            <path
+                                d="M9.25 13h1.5l1-2.25 1.5 4 1-2h1.5"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                        </svg>
+                        <span class="absolute inset-x-0 bottom-0 h-1 bg-sky-400"></span>
+                    </span>
+                    <span
+                        ><span class="block text-lg font-extrabold tracking-tight text-sky-900"
+                            >MeuLaudo</span
+                        ><span class="hidden text-xs font-medium text-slate-500 sm:block"
+                            >Portal da Clínica</span
+                        ></span
+                    >
+                </a>
+
+                <nav class="hidden items-center gap-2 md:flex" aria-label="Navegação do portal">
+                    <a
+                        href="listagem.html"
+                        aria-current="page"
+                        class="rounded-xl bg-sky-50 px-4 py-2.5 text-sm font-bold text-sky-900"
+                        >Exames enviados</a
+                    >
+                    <a
+                        href="upload.html"
+                        class="rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-100 hover:text-sky-900"
+                        >Novo exame</a
+                    >
+                    <a
+                        href="usuarios.html"
+                        class="rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-100 hover:text-sky-900"
+                        >Usuários</a
+                    >
+                </nav>
+
+                <div class="flex items-center gap-3">
+                    <div class="hidden text-right sm:block">
+                        <p class="text-sm font-bold text-slate-800">Clínica Central</p>
+                        <p class="text-xs text-slate-500">Operador: Mariana</p>
+                    </div>
+                    <span
+                        class="grid size-10 place-items-center rounded-full bg-sky-100 text-sm font-extrabold text-sky-900"
+                        >MC</span
+                    >
+                    <a
+                        href="auth.html"
+                        onclick="
+                            sessionStorage.removeItem('meulaudoClinicSession');
+                            localStorage.removeItem('meulaudoClinicSession');
+                        "
+                        title="Sair"
+                        aria-label="Sair do portal"
+                        class="hidden size-10 place-items-center rounded-xl text-slate-500 transition hover:bg-slate-100 hover:text-rose-600 sm:grid"
+                        ><svg viewBox="0 0 24 24" class="size-5" fill="none" aria-hidden="true">
+                            <path
+                                d="M10 5H5v14h5m4-3 4-4-4-4m4 4H9"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            /></svg
+                    ></a>
+                </div>
+            </div>
+            <nav class="border-t border-slate-200 px-4 py-2 md:hidden" aria-label="Navegação móvel">
+                <div class="mx-auto flex max-w-7xl gap-1 overflow-x-auto">
+                    <a
+                        href="listagem.html"
+                        aria-current="page"
+                        class="shrink-0 rounded-xl bg-sky-50 px-3 py-2.5 text-sm font-bold text-sky-900"
+                        >Exames</a
+                    ><a
+                        href="upload.html"
+                        class="shrink-0 rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-600"
+                        >Novo exame</a
+                    ><a
+                        href="usuarios.html"
+                        class="shrink-0 rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-600"
+                        >Usuários</a
+                    ><a
+                        href="auth.html"
+                        onclick="
+                            sessionStorage.removeItem('meulaudoClinicSession');
+                            localStorage.removeItem('meulaudoClinicSession');
+                        "
+                        class="ml-auto shrink-0 rounded-xl px-3 py-2.5 text-sm font-bold text-rose-600"
+                        >Sair</a
+                    >
+                </div>
+            </nav>
+        </header>
+
+        <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
+            <div class="flex flex-col justify-between gap-5 md:flex-row md:items-end">
+                <div>
+                    <p class="text-sm font-bold uppercase tracking-[0.14em] text-sky-700">
+                        Controle de envios
+                    </p>
+                    <h1 class="mt-3 text-3xl font-extrabold tracking-tight text-sky-900">
+                        Exames enviados
+                    </h1>
+                    <p class="mt-3 max-w-2xl text-sm leading-6 text-slate-500">
+                        Cada linha representa um exame independente, acessível pelo paciente com CPF
+                        e protocolo.
+                    </p>
+                </div>
+                <a
+                    href="upload.html"
+                    class="inline-flex items-center justify-center gap-2 rounded-xl bg-sky-900 px-5 py-3 text-sm font-bold text-white shadow-sm transition hover:bg-sky-800 focus-visible:ring-2 focus-visible:ring-sky-900 focus-visible:ring-offset-2"
+                >
+                    <svg viewBox="0 0 24 24" class="size-4" fill="none" aria-hidden="true">
+                        <path
+                            d="M12 5v14M5 12h14"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                        />
+                    </svg>
+                    Novo exame
+                </a>
+            </div>
+
+            <section
+                class="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4"
+                aria-label="Resumo dos exames"
+            >
+                <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                    <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">
+                        Total
+                    </p>
+                    <p id="count-total" class="mt-3 text-3xl font-extrabold text-sky-900">0</p>
+                </article>
+                <article class="rounded-2xl border border-emerald-200 bg-emerald-50 p-5 shadow-sm">
+                    <p class="text-xs font-bold uppercase tracking-[0.12em] text-emerald-700">
+                        Disponíveis
+                    </p>
+                    <p id="count-available" class="mt-3 text-3xl font-extrabold text-emerald-700">
+                        0
+                    </p>
+                </article>
+                <article class="rounded-2xl border border-amber-200 bg-amber-50 p-5 shadow-sm">
+                    <p class="text-xs font-bold uppercase tracking-[0.12em] text-amber-700">
+                        Processando
+                    </p>
+                    <p id="count-processing" class="mt-3 text-3xl font-extrabold text-amber-700">
+                        0
+                    </p>
+                </article>
+                <article class="rounded-2xl border border-rose-200 bg-rose-50 p-5 shadow-sm">
+                    <p class="text-xs font-bold uppercase tracking-[0.12em] text-rose-700">
+                        Com erro
+                    </p>
+                    <p id="count-error" class="mt-3 text-3xl font-extrabold text-rose-700">0</p>
+                </article>
+            </section>
+
+            <section
+                class="mt-6 rounded-3xl border border-slate-200 bg-white shadow-sm"
+                aria-labelledby="table-title"
+            >
+                <div class="border-b border-slate-200 p-5 sm:p-6">
+                    <div class="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
+                        <div>
+                            <h2 id="table-title" class="text-xl font-bold text-slate-900">
+                                Registros recentes
+                            </h2>
+                            <p id="results-count" class="mt-1 text-sm text-slate-500"></p>
+                        </div>
+                        <div class="grid gap-3 sm:grid-cols-[minmax(260px,1fr)_220px_auto]">
+                            <div>
+                                <label for="search-input" class="sr-only"
+                                    >Pesquisar por nome, CPF ou protocolo</label
+                                >
+                                <div class="relative">
+                                    <span
+                                        class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400"
+                                        ><svg
+                                            viewBox="0 0 24 24"
+                                            class="size-5"
+                                            fill="none"
+                                            aria-hidden="true"
+                                        >
+                                            <circle
+                                                cx="11"
+                                                cy="11"
+                                                r="6"
+                                                stroke="currentColor"
+                                                stroke-width="1.8"
+                                            />
+                                            <path
+                                                d="m16 16 4 4"
+                                                stroke="currentColor"
+                                                stroke-width="1.8"
+                                                stroke-linecap="round"
+                                            /></svg></span
+                                    ><input
+                                        id="search-input"
+                                        type="search"
+                                        placeholder="Nome, CPF ou protocolo"
+                                        class="w-full rounded-xl border border-slate-300 bg-white py-3 pl-12 pr-4 text-sm text-slate-900 placeholder:text-slate-400 focus:border-sky-900 focus:ring-2 focus:ring-sky-900/20"
+                                    />
+                                </div>
+                            </div>
+                            <div>
+                                <label for="status-filter" class="sr-only"
+                                    >Filtrar por status</label
+                                >
+                                <select
+                                    id="status-filter"
+                                    class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-semibold text-slate-700 focus:border-sky-900 focus:ring-2 focus:ring-sky-900/20"
+                                >
+                                    <option value="todos">Todos os status</option>
+                                    <option value="disponivel">Disponível</option>
+                                    <option value="processando">Processando</option>
+                                    <option value="erro">Erro no arquivo</option>
+                                </select>
+                            </div>
+                            <button
+                                id="clear-filters"
+                                type="button"
+                                class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-bold text-slate-700 hover:border-sky-700 hover:text-sky-900"
+                            >
+                                Limpar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="table-wrapper" class="overflow-x-auto">
+                    <table class="w-full min-w-[1100px] border-collapse text-left">
+                        <thead
+                            class="bg-slate-50 text-xs font-bold uppercase tracking-[0.1em] text-slate-500"
+                        >
+                            <tr>
+                                <th class="px-6 py-4">Paciente</th>
+                                <th class="px-6 py-4">CPF</th>
+                                <th class="px-6 py-4">Protocolo</th>
+                                <th class="px-6 py-4">Exame</th>
+                                <th class="px-6 py-4">Upload</th>
+                                <th class="px-6 py-4">Status</th>
+                                <th class="px-6 py-4 text-right">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="uploads-body" class="divide-y divide-slate-200"></tbody>
+                    </table>
+                </div>
+
+                <div id="empty-state" class="hidden px-6 py-16 text-center">
+                    <span
+                        class="mx-auto grid size-16 place-items-center rounded-3xl bg-slate-100 text-slate-400"
+                        ><svg viewBox="0 0 24 24" class="size-8" fill="none" aria-hidden="true">
+                            <path
+                                d="M5 5h14v14H5V5Zm3 4h8M8 13h5"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            /></svg
+                    ></span>
+                    <h3 class="mt-5 text-lg font-bold text-slate-900">
+                        Nenhum resultado encontrado
+                    </h3>
+                    <p class="mt-2 text-sm text-slate-500">
+                        Nenhum exame corresponde aos filtros aplicados.
+                    </p>
+                </div>
+            </section>
+        </main>
+
+        <div
+            id="toast"
+            role="status"
+            aria-live="polite"
+            class="fixed bottom-5 right-5 z-50 hidden max-w-sm rounded-2xl border border-emerald-200 bg-white p-4 shadow-xl"
+        >
+            <p id="toast-text" class="text-sm font-bold text-slate-900"></p>
+        </div>
+
+        <div
+            id="edit-modal"
+            class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 p-4"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="edit-title"
+        >
+            <div class="w-full max-w-lg rounded-3xl bg-white p-6 shadow-2xl sm:p-8">
+                <div class="flex items-start justify-between gap-4">
+                    <div>
+                        <p class="text-xs font-bold uppercase tracking-[0.14em] text-sky-700">
+                            Editar registro
+                        </p>
+                        <h2 id="edit-title" class="mt-2 text-xl font-bold text-slate-900">
+                            Dados do exame
+                        </h2>
+                    </div>
+                    <button
+                        id="close-edit"
+                        type="button"
+                        aria-label="Fechar"
+                        class="grid size-9 place-items-center rounded-xl text-slate-500 hover:bg-slate-100"
+                    >
+                        <svg viewBox="0 0 24 24" class="size-5" fill="none" aria-hidden="true">
+                            <path
+                                d="m6 6 12 12M18 6 6 18"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                            />
+                        </svg>
+                    </button>
+                </div>
+                <form id="edit-form" class="mt-6 space-y-5">
+                    <div>
+                        <label for="edit-name" class="mb-2 block text-sm font-bold text-slate-700"
+                            >Paciente</label
+                        ><input
+                            id="edit-name"
+                            class="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:border-sky-900 focus:ring-2 focus:ring-sky-900/20"
+                        />
+                    </div>
+                    <div>
+                        <label
+                            for="edit-protocol"
+                            class="mb-2 block text-sm font-bold text-slate-700"
+                            >Protocolo</label
+                        ><input
+                            id="edit-protocol"
+                            class="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm font-semibold uppercase focus:border-sky-900 focus:ring-2 focus:ring-sky-900/20"
+                        />
+                    </div>
+                    <div>
+                        <label for="edit-exam" class="mb-2 block text-sm font-bold text-slate-700"
+                            >Exame</label
+                        ><input
+                            id="edit-exam"
+                            class="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:border-sky-900 focus:ring-2 focus:ring-sky-900/20"
+                        />
+                    </div>
+                    <div>
+                        <label for="edit-status" class="mb-2 block text-sm font-bold text-slate-700"
+                            >Status</label
+                        ><select
+                            id="edit-status"
+                            class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm focus:border-sky-900 focus:ring-2 focus:ring-sky-900/20"
+                        >
+                            <option value="disponivel">Disponível</option>
+                            <option value="processando">Processando</option>
+                            <option value="erro">Erro no arquivo</option>
+                        </select>
+                    </div>
+                    <div class="flex justify-end gap-3 pt-2">
+                        <button
+                            id="cancel-edit"
+                            type="button"
+                            class="rounded-xl border border-slate-300 px-4 py-3 text-sm font-bold text-slate-700"
+                        >
+                            Cancelar</button
+                        ><button
+                            type="submit"
+                            class="rounded-xl bg-sky-900 px-5 py-3 text-sm font-bold text-white hover:bg-sky-800"
+                        >
+                            Salvar alterações
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <script>
+            const seedUploads = [
+                {
+                    id: 1,
+                    name: 'Mariana da Silva',
+                    cpf: '123.456.789-00',
+                    protocol: 'ML-2026-1048',
+                    exam: 'Hemograma completo',
+                    uploadDate: '30/06/2026',
+                    status: 'disponivel',
+                },
+                {
+                    id: 2,
+                    name: 'Carlos Henrique Souza',
+                    cpf: '987.654.321-00',
+                    protocol: 'ML-2026-1049',
+                    exam: 'Ultrassonografia abdominal',
+                    uploadDate: '30/06/2026',
+                    status: 'processando',
+                },
+                {
+                    id: 3,
+                    name: 'Ana Paula Gomes',
+                    cpf: '456.789.123-00',
+                    protocol: 'ML-2026-1050',
+                    exam: 'Ressonância magnética',
+                    uploadDate: '29/06/2026',
+                    status: 'erro',
+                },
+                {
+                    id: 4,
+                    name: 'João Pedro Lima',
+                    cpf: '321.654.987-00',
+                    protocol: 'ML-2026-1047',
+                    exam: 'Raio-X de tórax',
+                    uploadDate: '29/06/2026',
+                    status: 'disponivel',
+                },
+            ];
+            let uploads = [
+                ...JSON.parse(localStorage.getItem('meulaudoUploads') || '[]'),
+                ...seedUploads,
+            ];
+            let editingId = null;
+
+            const body = document.querySelector('#uploads-body');
+            const searchInput = document.querySelector('#search-input');
+            const statusFilter = document.querySelector('#status-filter');
+            const normalize = (value) =>
+                value
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .toLowerCase();
+            const statusConfig = {
+                disponivel: {
+                    label: 'Disponível',
+                    classes: 'bg-emerald-50 text-emerald-700 ring-emerald-600/20',
+                    dot: 'bg-emerald-600',
+                },
+                processando: {
+                    label: 'Processando',
+                    classes: 'bg-amber-50 text-amber-700 ring-amber-500/25',
+                    dot: 'bg-amber-500 animate-pulse',
+                },
+                erro: {
+                    label: 'Erro no arquivo',
+                    classes: 'bg-rose-50 text-rose-700 ring-rose-600/20',
+                    dot: 'bg-rose-600',
+                },
+            };
+            const showToast = (message) => {
+                document.querySelector('#toast-text').textContent = message;
+                const toast = document.querySelector('#toast');
+                toast.classList.remove('hidden');
+                window.setTimeout(() => toast.classList.add('hidden'), 3000);
+            };
+            const filteredUploads = () => {
+                const term = normalize(searchInput.value.trim());
+                const status = statusFilter.value;
+                return uploads.filter((item) => {
+                    const matchesText = normalize(
+                        `${item.name} ${item.cpf} ${item.protocol}`
+                    ).includes(term);
+                    const matchesStatus = status === 'todos' || item.status === status;
+                    return matchesText && matchesStatus;
+                });
+            };
+            const render = () => {
+                const items = filteredUploads();
+                body.innerHTML = items
+                    .map((item) => {
+                        const config = statusConfig[item.status];
+                        return `<tr class="transition hover:bg-slate-50">
+          <td class="px-6 py-5"><p class="font-bold text-slate-900">${item.name}</p></td>
+          <td class="px-6 py-5 text-sm font-medium text-slate-600">${item.cpf}</td>
+          <td class="px-6 py-5 text-sm font-bold text-sky-900">${item.protocol}</td>
+          <td class="px-6 py-5 text-sm text-slate-700">${item.exam}</td>
+          <td class="px-6 py-5 text-sm text-slate-500">${item.uploadDate}</td>
+          <td class="px-6 py-5"><span class="inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-bold ring-1 ring-inset ${config.classes}"><span class="size-2 rounded-full ${config.dot}"></span>${config.label}</span></td>
+          <td class="px-6 py-5"><div class="flex justify-end gap-2"><button type="button" data-edit="${item.id}" class="rounded-xl border border-slate-300 px-3 py-2 text-xs font-bold text-slate-700 hover:border-sky-700 hover:text-sky-900">Editar</button><button type="button" data-delete="${item.id}" class="rounded-xl px-3 py-2 text-xs font-bold text-rose-600 hover:bg-rose-50">Excluir</button></div></td>
+        </tr>`;
+                    })
+                    .join('');
+
+                const empty = items.length === 0;
+                document.querySelector('#table-wrapper').classList.toggle('hidden', empty);
+                document.querySelector('#empty-state').classList.toggle('hidden', !empty);
+                document.querySelector('#results-count').textContent =
+                    `${items.length} ${items.length === 1 ? 'exame encontrado' : 'exames encontrados'}`;
+                document.querySelector('#count-total').textContent = uploads.length;
+                document.querySelector('#count-available').textContent = uploads.filter(
+                    (item) => item.status === 'disponivel'
+                ).length;
+                document.querySelector('#count-processing').textContent = uploads.filter(
+                    (item) => item.status === 'processando'
+                ).length;
+                document.querySelector('#count-error').textContent = uploads.filter(
+                    (item) => item.status === 'erro'
+                ).length;
+            };
+
+            const modal = document.querySelector('#edit-modal');
+            const openEdit = (id) => {
+                const item = uploads.find((upload) => upload.id === id);
+                if (!item) return;
+                editingId = id;
+                document.querySelector('#edit-name').value = item.name;
+                document.querySelector('#edit-protocol').value = item.protocol;
+                document.querySelector('#edit-exam').value = item.exam;
+                document.querySelector('#edit-status').value = item.status;
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                document.body.classList.add('overflow-hidden');
+                document.querySelector('#edit-name').focus();
+            };
+            const closeEdit = () => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                document.body.classList.remove('overflow-hidden');
+                editingId = null;
+            };
+
+            body.addEventListener('click', (event) => {
+                const editButton = event.target.closest('[data-edit]');
+                const deleteButton = event.target.closest('[data-delete]');
+                if (editButton) openEdit(Number(editButton.dataset.edit));
+                if (deleteButton) {
+                    const id = Number(deleteButton.dataset.delete);
+                    const item = uploads.find((upload) => upload.id === id);
+                    if (item && window.confirm(`Excluir o exame “${item.exam}” de ${item.name}?`)) {
+                        uploads = uploads.filter((upload) => upload.id !== id);
+                        const customIds = new Set(seedUploads.map((upload) => upload.id));
+                        localStorage.setItem(
+                            'meulaudoUploads',
+                            JSON.stringify(uploads.filter((upload) => !customIds.has(upload.id)))
+                        );
+                        render();
+                        showToast('Exame excluído da listagem.');
+                    }
+                }
+            });
+
+            document.querySelector('#edit-form').addEventListener('submit', (event) => {
+                event.preventDefault();
+                const item = uploads.find((upload) => upload.id === editingId);
+                if (!item) return;
+                item.name = document.querySelector('#edit-name').value.trim();
+                item.protocol = document.querySelector('#edit-protocol').value.trim().toUpperCase();
+                item.exam = document.querySelector('#edit-exam').value.trim();
+                item.status = document.querySelector('#edit-status').value;
+                const customIds = new Set(seedUploads.map((upload) => upload.id));
+                localStorage.setItem(
+                    'meulaudoUploads',
+                    JSON.stringify(uploads.filter((upload) => !customIds.has(upload.id)))
+                );
+                closeEdit();
+                render();
+                showToast('Exame atualizado com sucesso.');
+            });
+            document.querySelector('#close-edit').addEventListener('click', closeEdit);
+            document.querySelector('#cancel-edit').addEventListener('click', closeEdit);
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) closeEdit();
+            });
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && !modal.classList.contains('hidden')) closeEdit();
+            });
+            searchInput.addEventListener('input', render);
+            statusFilter.addEventListener('change', render);
+            document.querySelector('#clear-filters').addEventListener('click', () => {
+                searchInput.value = '';
+                statusFilter.value = 'todos';
+                render();
+                searchInput.focus();
+            });
+            render();
+        </script>
+    </body>
+</html>
