@@ -9,6 +9,7 @@ import { PatientExamResult } from "./feature/patient-exam-result";
 export const metadata: Metadata = {
   title: "Resultado do exame",
   description: "Consulte, visualize e baixe o resultado do seu exame.",
+  robots: { index: false, follow: false },
 };
 
 type PatientExamPageProps = {

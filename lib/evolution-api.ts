@@ -53,3 +53,30 @@ export const sendWhatsappMessage = async ({
     },
   });
 };
+
+type SendWhatsappImageInput = {
+  phone: string;
+  caption: string;
+  imageBase64: string;
+  fileName: string;
+};
+
+export const sendWhatsappImage = async ({
+  phone,
+  caption,
+  imageBase64,
+  fileName,
+}: SendWhatsappImageInput) => {
+  await evolutionApi({
+    path: `/message/sendMedia/${evolutionApiConfig.instanceName}`,
+    method: "POST",
+    body: {
+      number: phone,
+      mediatype: "image",
+      mimetype: "image/png",
+      caption,
+      media: imageBase64,
+      fileName,
+    },
+  });
+};

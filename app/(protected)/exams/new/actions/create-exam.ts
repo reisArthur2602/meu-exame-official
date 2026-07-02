@@ -5,9 +5,11 @@ import { revalidatePath } from "next/cache";
 
 import { Prisma } from "@/app/generated/prisma/client";
 import { verifyAuth } from "@/lib/auth/verify-auth";
-import { sendWhatsappMessage } from "@/lib/evolution-api";
+import { sendWhatsappImage } from "@/lib/evolution-api";
 import { uploadExamFile } from "@/lib/ftp";
+import { generateExamNotificationImage } from "@/lib/generate-exam-notification-image";
 import prisma from "@/lib/prisma";
+import { getPatientExamUrl } from "@/lib/urls";
 import {
   type CreateExamInput,
   createExamSchema,
@@ -84,14 +86,19 @@ export const createExam = async (input: CreateExamInput, file: File) => {
     });
 
     try {
-      const baseUrl = process.env.VERCEL_URL
-        ? `https://${process.env.VERCEL_URL}`
-        : "http://localhost:3000";
-      const examLink = `${baseUrl}/patient/${exam.id}`;
+      const examLink = getPatientExamUrl(exam.id);
 
-      await sendWhatsappMessage({
+      const notificationImage = await generateExamNotificationImage({
+        patientName: parsed.data.patientName,
+        examName: parsed.data.examName,
+        protocol: parsed.data.protocol,
+      });
+
+      await sendWhatsappImage({
         phone: parsed.data.patientPhone,
-        message: `Olá ${parsed.data.patientName}! 👋\n\nSeu exame "${parsed.data.examName}" está pronto e seguro na MeuLaudo.\n\n🔐 Acesse com:\n📋 Protocolo: ${parsed.data.protocol}\n\n🔗 Link direto: ${examLink}\n\nEquipe MeuLaudo`,
+        caption: `Olá ${parsed.data.patientName}! 👋\n\nSeu exame "${parsed.data.examName}" está pronto e seguro na MeuLaudo.\n\n🔐 Acesse com:\n📋 Protocolo: ${parsed.data.protocol}\n\n🔗 Link direto: ${examLink}\n\nEquipe MeuLaudo`,
+        imageBase64: notificationImage,
+        fileName: `exame-${parsed.data.protocol}.png`,
       });
     } catch {
       await prisma.exam.update({

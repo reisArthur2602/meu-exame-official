@@ -3,6 +3,8 @@ import { z } from "zod";
 const envSchema = z.object({
   DATABASE_URL: z.string().min(1, "Informe a DATABASE_URL"),
 
+  NEXT_PUBLIC_URL: z.string().url("Informe uma NEXT_PUBLIC_URL válida"),
+
   JWT_SECRET: z
     .string()
     .min(32, "JWT_SECRET deve ter pelo menos 32 caracteres"),

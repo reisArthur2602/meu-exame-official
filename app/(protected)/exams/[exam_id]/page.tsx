@@ -7,6 +7,7 @@ import { ExamDetailLoading } from "./feature/exam-detail-loading";
 export const metadata: Metadata = {
   title: "Detalhes do exame",
   description: "Consulte os dados, arquivo e status de envio deste exame.",
+  robots: { index: false, follow: false },
 };
 
 type ExamDetailPageProps = {

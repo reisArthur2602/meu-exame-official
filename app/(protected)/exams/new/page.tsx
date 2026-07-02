@@ -6,6 +6,7 @@ import { NewExamForm } from "./feature/new-exam-form";
 export const metadata: Metadata = {
   title: "Novo exame",
   description: "Cadastre e envie um novo exame para consulta do paciente.",
+  robots: { index: false, follow: false },
 };
 
 const NewExamPage = () => {

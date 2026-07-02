@@ -3,8 +3,10 @@
 import { revalidatePath } from "next/cache";
 
 import { verifyAuth } from "@/lib/auth/verify-auth";
-import { sendWhatsappMessage } from "@/lib/evolution-api";
+import { sendWhatsappImage } from "@/lib/evolution-api";
+import { generateExamNotificationImage } from "@/lib/generate-exam-notification-image";
 import prisma from "@/lib/prisma";
+import { getPatientExamUrl } from "@/lib/urls";
 
 export const resendWhatsappNotification = async (examId: string) => {
   try {
@@ -20,14 +22,19 @@ export const resendWhatsappNotification = async (examId: string) => {
     }
 
     try {
-      const baseUrl = process.env.VERCEL_URL
-        ? `https://${process.env.VERCEL_URL}`
-        : "http://localhost:3000";
-      const examLink = `${baseUrl}/patient/${exam.id}`;
+      const examLink = getPatientExamUrl(exam.id);
 
-      await sendWhatsappMessage({
+      const notificationImage = await generateExamNotificationImage({
+        patientName: exam.patientName,
+        examName: exam.examName,
+        protocol: exam.protocol,
+      });
+
+      await sendWhatsappImage({
         phone: exam.patientPhone,
-        message: `Olá ${exam.patientName}! 👋\n\nSeu exame "${exam.examName}" está pronto e seguro na MeuLaudo.\n\n🔐 Acesse com:\n📋 Protocolo: ${exam.protocol}\n\n🔗 Link direto: ${examLink}\n\nEquipe MeuLaudo`,
+        caption: `Olá ${exam.patientName}! 👋\n\nSeu exame "${exam.examName}" está pronto e seguro na MeuLaudo.\n\n🔐 Acesse com:\n📋 Protocolo: ${exam.protocol}\n\n🔗 Link direto: ${examLink}\n\nEquipe MeuLaudo`,
+        imageBase64: notificationImage,
+        fileName: `exame-${exam.protocol}.png`,
       });
     } catch {
       return {

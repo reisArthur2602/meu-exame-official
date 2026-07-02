@@ -9,6 +9,7 @@ import { ClinicLoginForm } from "./feature/clinic-login-form";
 export const metadata: Metadata = {
   title: "Portal da Clínica",
   description: "Acesse o Portal da Clínica MeuLaudo com seu usuário e senha.",
+  robots: { index: false, follow: false },
 };
 
 const AuthPage = async () => {

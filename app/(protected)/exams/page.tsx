@@ -9,6 +9,7 @@ import { ExamsLoading } from "./feature/exams-loading";
 export const metadata: Metadata = {
   title: "Exames enviados",
   description: "Acompanhe os exames enviados pela clínica.",
+  robots: { index: false, follow: false },
 };
 
 const ExamsPage = () => {

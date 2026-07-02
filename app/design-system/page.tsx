@@ -76,6 +76,7 @@ const SectionHeading = ({
 export const metadata: Metadata = {
   title: "Design System",
   description: "Tokens e componentes visuais usados pela plataforma MeuLaudo.",
+  robots: { index: false, follow: false },
 };
 
 const DesignSystemPage = () => {
@@ -233,7 +234,7 @@ const DesignSystemPage = () => {
 
               <div>
                 <CardEyebrow>Paciente</CardEyebrow>
-                <CardTitle>Anderson Costa</CardTitle>
+                <CardTitle>Arthur Reis</CardTitle>
               </div>
             </div>
 
