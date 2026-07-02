@@ -20,9 +20,14 @@ export const resendWhatsappNotification = async (examId: string) => {
     }
 
     try {
+      const baseUrl = process.env.VERCEL_URL
+        ? `https://${process.env.VERCEL_URL}`
+        : "http://localhost:3000";
+      const examLink = `${baseUrl}/patient/${exam.id}`;
+
       await sendWhatsappMessage({
         phone: exam.patientPhone,
-        message: `Olá, ${exam.patientName}! Seu exame "${exam.examName}" está disponível na MeuLaudo. Consulte com o protocolo ${exam.protocol}.`,
+        message: `Olá ${exam.patientName}! 👋\n\nSeu exame "${exam.examName}" está pronto e seguro na MeuLaudo.\n\n🔐 Acesse com:\n📋 Protocolo: ${exam.protocol}\n\n🔗 Link direto: ${examLink}\n\nEquipe MeuLaudo`,
       });
     } catch {
       return {

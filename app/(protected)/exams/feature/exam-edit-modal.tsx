@@ -9,7 +9,6 @@ import { toast } from "sonner";
 import { updateExam } from "@/app/(protected)/exams/actions/update-exam";
 import type { ExamRow } from "@/app/(protected)/exams/feature/exams-columns";
 import { Input } from "@/components/ui/input";
-import { Select } from "@/components/ui/select";
 import {
   type UpdateExamInput,
   updateExamSchema,
@@ -37,7 +36,6 @@ export const ExamEditModal = ({ exam, onClose }: ExamEditModalProps) => {
         patientName: exam.name,
         protocol: exam.protocol,
         examName: exam.exam,
-        whatsappFailed: exam.hasError,
       });
     }
   }, [exam, reset]);
@@ -119,20 +117,6 @@ export const ExamEditModal = ({ exam, onClose }: ExamEditModalProps) => {
             errorMessage={errors.examName?.message}
             {...register("examName")}
           />
-
-          <div>
-            <span className="mb-2 block text-sm font-bold text-slate-700">
-              Status
-            </span>
-            <Select
-              {...register("whatsappFailed", {
-                setValueAs: (value) => value === "true",
-              })}
-            >
-              <option value="false">Disponível</option>
-              <option value="true">Erro de envio</option>
-            </Select>
-          </div>
 
           <div className="flex justify-end gap-3 pt-2">
             <button

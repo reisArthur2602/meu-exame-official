@@ -1,5 +1,7 @@
 import { Download, Eye, ShieldCheck } from "lucide-react";
 
+import { CopyExamLinkButton } from "./copy-exam-link-button";
+
 export type PatientExamResult = {
   id: string;
   patientName: string;
@@ -22,11 +24,11 @@ export const PatientExamResult = ({ exam }: PatientExamResultProps) => {
           Exame localizado
         </span>
         <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-sky-900 sm:text-4xl">
-          Seu resultado está disponível
+          Seu exame está pronto para consulta
         </h1>
         <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-500">
-          Esta consulta exibe somente o exame associado ao CPF e ao protocolo
-          informados.
+          Acesse seu resultado usando CPF e protocolo. O arquivo está seguro e
+          disponível apenas para você.
         </p>
       </div>
 
@@ -101,7 +103,7 @@ export const PatientExamResult = ({ exam }: PatientExamResultProps) => {
             </div>
           </dl>
 
-          <div className="mt-7 grid gap-4 sm:grid-cols-2">
+          <div className="mt-7 grid gap-4 sm:grid-cols-3">
             <a
               href={`/patient/${exam.id}/download?view=1`}
               target="_blank"
@@ -111,6 +113,7 @@ export const PatientExamResult = ({ exam }: PatientExamResultProps) => {
               <Eye className="size-5" strokeWidth={1.8} aria-hidden="true" />
               Visualizar laudo
             </a>
+            <CopyExamLinkButton examId={exam.id} />
             <a
               href={`/patient/${exam.id}/download`}
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-sky-900 px-5 py-3.5 text-sm font-bold text-white shadow-sm transition hover:bg-sky-800 focus-visible:ring-2 focus-visible:ring-sky-900 focus-visible:ring-offset-2"

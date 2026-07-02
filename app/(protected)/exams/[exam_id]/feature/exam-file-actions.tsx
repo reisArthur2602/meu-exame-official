@@ -6,6 +6,7 @@ import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { replaceExamFile } from "@/app/(protected)/exams/[exam_id]/actions/replace-exam-file";
 import { deleteExam } from "@/app/(protected)/exams/actions/delete-exam";
+import { AlertDialog } from "@/components/ui/alert-dialog";
 
 type ExamFileActionsProps = {
   examId: string;
@@ -22,6 +23,7 @@ export const ExamFileActions = ({
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [isReplacing, setIsReplacing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
   const handleReplaceFile = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -42,11 +44,6 @@ export const ExamFileActions = ({
   };
 
   const handleDelete = async () => {
-    const confirmed = window.confirm(
-      `Excluir o exame "${examName}" de ${patientName}?`,
-    );
-    if (!confirmed) return;
-
     setIsDeleting(true);
     const result = await deleteExam(examId);
     setIsDeleting(false);
@@ -89,11 +86,22 @@ export const ExamFileActions = ({
       <button
         type="button"
         disabled={isDeleting}
-        onClick={handleDelete}
+        onClick={() => setIsDeleteDialogOpen(true)}
         className="rounded-xl bg-white px-4 py-2.5 text-sm font-bold text-rose-600 shadow-sm transition hover:bg-rose-50 disabled:cursor-wait disabled:opacity-70"
       >
         {isDeleting ? "Excluindo..." : "Excluir"}
       </button>
+
+      <AlertDialog
+        open={isDeleteDialogOpen}
+        onClose={() => setIsDeleteDialogOpen(false)}
+        onConfirm={handleDelete}
+        isConfirming={isDeleting}
+        variant="danger"
+        title="Excluir exame"
+        description={`Excluir o exame "${examName}" de ${patientName}? Essa ação não pode ser desfeita.`}
+        confirmLabel="Excluir"
+      />
     </div>
   );
 };

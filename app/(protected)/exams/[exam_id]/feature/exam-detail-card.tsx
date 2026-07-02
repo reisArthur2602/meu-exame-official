@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { Badge } from "@/components/ui/badge";
 import { CopyPatientLinkButton } from "./copy-patient-link-button";
+import { DeleteExamButton } from "./delete-exam-button";
 import { ExamEditTrigger } from "./exam-edit-trigger";
 import { ExamFileActions } from "./exam-file-actions";
 import { WhatsappStatus } from "./whatsapp-status";
@@ -63,7 +64,12 @@ export const ExamDetailCard = ({ exam }: ExamDetailCardProps) => {
         </div>
 
         <div className="flex flex-col gap-3 sm:flex-row">
-          <CopyPatientLinkButton protocol={exam.protocol} />
+          <DeleteExamButton
+            examId={exam.id}
+            examName={exam.examName}
+            patientName={exam.patientName}
+          />
+          <CopyPatientLinkButton examId={exam.id} />
           <a
             href={`/exams/${exam.id}/download?view=1`}
             target="_blank"
@@ -103,7 +109,7 @@ export const ExamDetailCard = ({ exam }: ExamDetailCardProps) => {
             />
           </div>
 
-          <dl className="mt-6 grid gap-5 sm:grid-cols-2">
+          <dl className="mt-6 grid gap-5 sm:grid-cols-3">
             <div className="rounded-2xl bg-slate-50 p-4">
               <dt className="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">
                 Nome do exame
@@ -122,33 +128,13 @@ export const ExamDetailCard = ({ exam }: ExamDetailCardProps) => {
             </div>
             <div className="rounded-2xl bg-slate-50 p-4">
               <dt className="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">
-                Data do exame
-              </dt>
-              <dd className="mt-2 text-sm font-bold text-slate-900">
-                {exam.examDate}
-              </dd>
-            </div>
-            <div className="rounded-2xl bg-slate-50 p-4">
-              <dt className="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">
                 Enviado em
               </dt>
               <dd className="mt-2 text-sm font-bold text-slate-900">
                 {exam.uploadDate}
               </dd>
             </div>
-          </dl>
-        </article>
-
-        <article className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-          <h2 className="text-xl font-bold text-slate-900">
-            Paciente vinculado
-          </h2>
-          <p className="mt-2 text-sm text-slate-500">
-            Esses dados não criam cadastro permanente. Servem apenas para
-            localizar este exame.
-          </p>
-          <dl className="mt-6 grid gap-5 sm:grid-cols-3">
-            <div className="rounded-2xl border border-slate-200 p-4">
+            <div className="rounded-2xl bg-slate-50 p-4">
               <dt className="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">
                 Paciente
               </dt>
@@ -156,7 +142,7 @@ export const ExamDetailCard = ({ exam }: ExamDetailCardProps) => {
                 {exam.patientName}
               </dd>
             </div>
-            <div className="rounded-2xl border border-slate-200 p-4">
+            <div className="rounded-2xl bg-slate-50 p-4">
               <dt className="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">
                 CPF
               </dt>
@@ -164,7 +150,7 @@ export const ExamDetailCard = ({ exam }: ExamDetailCardProps) => {
                 {exam.patientCpf}
               </dd>
             </div>
-            <div className="rounded-2xl border border-slate-200 p-4">
+            <div className="rounded-2xl bg-slate-50 p-4">
               <dt className="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">
                 WhatsApp
               </dt>

@@ -42,6 +42,17 @@ export const createExam = async (input: CreateExamInput, file: File) => {
       };
     }
 
+    const existingExam = await prisma.exam.findFirst({
+      where: { protocol: parsed.data.protocol },
+    });
+
+    if (existingExam) {
+      return {
+        ok: false,
+        message: "Já existe um exame com este protocolo.",
+      };
+    }
+
     const buffer = Buffer.from(await file.arrayBuffer());
     const remoteFileName = `${randomUUID()}.${extension}`;
 
@@ -73,9 +84,14 @@ export const createExam = async (input: CreateExamInput, file: File) => {
     });
 
     try {
+      const baseUrl = process.env.VERCEL_URL
+        ? `https://${process.env.VERCEL_URL}`
+        : "http://localhost:3000";
+      const examLink = `${baseUrl}/patient/${exam.id}`;
+
       await sendWhatsappMessage({
         phone: parsed.data.patientPhone,
-        message: `Olá, ${parsed.data.patientName}! Seu exame "${parsed.data.examName}" já está disponível na MeuLaudo. Consulte com o protocolo ${parsed.data.protocol}.`,
+        message: `Olá ${parsed.data.patientName}! 👋\n\nSeu exame "${parsed.data.examName}" está pronto e seguro na MeuLaudo.\n\n🔐 Acesse com:\n📋 Protocolo: ${parsed.data.protocol}\n\n🔗 Link direto: ${examLink}\n\nEquipe MeuLaudo`,
       });
     } catch {
       await prisma.exam.update({

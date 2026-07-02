@@ -4,14 +4,14 @@ import { Copy } from "lucide-react";
 import { toast } from "sonner";
 
 type CopyPatientLinkButtonProps = {
-  protocol: string;
+  examId: string;
 };
 
 export const CopyPatientLinkButton = ({
-  protocol,
+  examId,
 }: CopyPatientLinkButtonProps) => {
   const handleCopy = async () => {
-    const link = `${window.location.origin}/patient?protocolo=${encodeURIComponent(protocol)}`;
+    const link = `${window.location.origin}/patient/${examId}`;
 
     try {
       await navigator.clipboard.writeText(link);

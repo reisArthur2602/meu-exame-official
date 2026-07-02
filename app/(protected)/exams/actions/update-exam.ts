@@ -24,6 +24,22 @@ export const updateExam = async (input: UpdateExamInput) => {
 
     const { id, ...data } = parsed.data;
 
+    if (data.protocol) {
+      const existingExam = await prisma.exam.findFirst({
+        where: {
+          protocol: data.protocol,
+          NOT: { id },
+        },
+      });
+
+      if (existingExam) {
+        return {
+          ok: false,
+          message: "Já existe um exame com este protocolo.",
+        };
+      }
+    }
+
     await prisma.exam.update({
       where: { id, uploadedById: user.id },
       data,
