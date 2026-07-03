@@ -1,15 +1,9 @@
 import type { Metadata } from "next";
-import { DM_Sans, Sora } from "next/font/google";
+import { DM_Sans } from "next/font/google";
 import { Toaster } from "sonner";
 
 import { env } from "@/lib/env";
 import "./globals.css";
-
-const sora = Sora({
-  variable: "--font-sora",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-});
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -61,10 +55,7 @@ const RootLayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <html
-      lang="pt-BR"
-      className={`${sora.variable} ${dmSans.variable} antialiased`}
-    >
+    <html lang="pt-BR" className={`${dmSans.variable} antialiased`}>
       <body className="min-h-dvh flex flex-col">
         {children}
         <Toaster richColors position="top-right" />

@@ -6,7 +6,6 @@
 
   /* Typography tokens (MeuLaudo Design System) */
   --font-family-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-family-display: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
 
   /* Font sizes */
   --font-size-xs: 0.75rem; /* 12px — texto de apoio, labels, badges */
@@ -43,7 +42,6 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-family-sans);
-  --font-display: var(--font-family-display);
   --font-mono: ui-monospace, SFMono-Regular, monospace;
 }
 
@@ -51,15 +49,6 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-family-sans);
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-family-display);
 }
 
 * {
